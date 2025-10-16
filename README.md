@@ -1,2 +1,0 @@
-# wizdomdata-webapp
-wizdomdata webapp
