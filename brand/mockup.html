@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WizdomData · Consultora de Data Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ Tokens del brandbook ============ */
+  :root {
+    --tinta: #0C0E12;
+    --tinta-2: #2A2D33;
+    --bone: #E8E3D6;
+    --bone-light: #F2EEE3;
+    --bone-3: #A8A498;
+    --ambar: #E8800C;
+    --rule: rgba(232, 227, 214, 0.12);
+    --rule-strong: rgba(232, 227, 214, 0.22);
+    --mute: #6E6A60;
+
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --max-w: 1280px;
+    --pad-x: 64px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--tinta);
+    color: var(--bone);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ============ Símbolo (diafragma) ============ */
+  .mark {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+
+  .mk-bone path:not([data-rombo]) { fill: var(--bone); }
+  .mk-tinta path:not([data-rombo]) { fill: var(--tinta); }
+  .mk-rombo path[data-rombo] { fill: var(--ambar); }
+
+  /* ============ Layout helpers ============ */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--pad-x);
+  }
+
+  .divider {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+  }
+
+  .divider svg { width: 10px; height: 10px; }
+
+  /* ============ Navbar ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(12, 14, 18, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px var(--pad-x);
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--bone);
+  }
+  .logo .mark { width: 28px; height: 28px; }
+  .logo .wm {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .logo .wm em {
+    font-style: normal;
+    color: var(--bone);
+  }
+  .logo .wm span { color: var(--bone-3); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--bone-3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    text-transform: lowercase;
+  }
+  .nav-links a:hover { color: var(--bone); }
+  .nav-links a.cta {
+    color: var(--tinta);
+    background: var(--ambar);
+    padding: 10px 18px;
+    border-radius: 2px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .nav-links a.cta:hover {
+    background: var(--bone);
+    color: var(--tinta);
+  }
+
+  /* ============ Section base ============ */
+  section { position: relative; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ambar);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow .num { color: var(--bone-3); }
+
+  .h-display {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(48px, 7.5vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--bone);
+  }
+  .h-section {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(36px, 4.5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--bone);
+  }
+  .h-3 {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--bone);
+  }
+  .h-4 {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.3;
+    color: var(--bone);
+  }
+  .body-l {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--bone-3);
+    text-wrap: pretty;
+  }
+  .body {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--bone-3);
+  }
+  .meta-mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--bone-3);
+  }
+
+  /* ============ Hero ============ */
+  .hero {
+    padding: 100px var(--pad-x) 140px;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: end;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-left .eyebrow {
+    margin-bottom: 56px;
+    padding-top: 60px;
+  }
+  .hero-en {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ambar);
+    margin-bottom: 28px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .hero-title {
+    margin-bottom: 36px;
+  }
+  .hero-title .accent {
+    color: var(--ambar);
+    font-style: italic;
+    font-weight: 600;
+  }
+  .hero-sub {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--bone-3);
+    max-width: 52ch;
+    margin-bottom: 56px;
+    text-wrap: pretty;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    letter-spacing: 0;
+  }
+  .btn-primary {
+    background: var(--ambar);
+    color: var(--tinta);
+  }
+  .btn-primary:hover {
+    background: var(--bone);
+    color: var(--tinta);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--bone);
+    border-color: var(--rule-strong);
+  }
+  .btn-secondary:hover {
+    border-color: var(--bone);
+  }
+  .btn-arrow {
+    transition: transform 0.2s ease;
+  }
+  .btn:hover .btn-arrow { transform: translateX(3px); }
+
+  .hero-pillars {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--bone-3);
+    text-transform: uppercase;
+  }
+  .hero-pillars .divider svg path[data-rombo] { fill: var(--ambar); }
+  .hero-pillars .divider svg path:not([data-rombo]) { fill: var(--bone-3); }
+
+  .hero-right {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 24px;
+    position: relative;
+  }
+  .hero-mark-big {
+    width: 380px;
+    height: 380px;
+    opacity: 0.95;
+    animation: slowSpin 60s linear infinite;
+  }
+  @keyframes slowSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Hero watermark grid bg */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.4;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ============ Section header (común) ============ */
+  .sec {
+    padding: 120px var(--pad-x);
+    max-width: var(--max-w);
+    margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+  .sec-head {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-bottom: 80px;
+  }
+  .sec-head .left {
+    position: sticky;
+    top: 100px;
+  }
+  .sec-head .right {
+    max-width: 720px;
+  }
+  .sec-head .right .h-section {
+    margin-bottom: 24px;
+  }
+  .sec-head .accent { color: var(--ambar); font-style: italic; font-weight: 600; }
+
+  /* ============ Capacidades (sec 02) ============ */
+  .caps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .cap-card {
+    padding: 48px 40px 56px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.3s ease;
+    position: relative;
+  }
+  .cap-card:hover {
+    background: rgba(232, 227, 214, 0.02);
+  }
+  .cap-card .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ambar);
+    letter-spacing: 0.16em;
+    margin-bottom: 18px;
+  }
+  .cap-card .h-3 {
+    margin-bottom: 16px;
+  }
+  .cap-card .body {
+    margin-bottom: 32px;
+    max-width: 46ch;
+  }
+  .cap-card .stack-line {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--bone-3);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+  .cap-card .stack-line .label {
+    color: var(--ambar);
+    margin-right: 6px;
+  }
+
+  .caps-footer {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bone-3);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+    max-width: 70ch;
+  }
+
+  /* ============ Metodología (sec 03) ============ */
+  .method-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .method-item {
+    display: grid;
+    grid-template-columns: 80px 280px 1fr;
+    gap: 60px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .method-item:last-child { border-bottom: none; }
+  .method-item .step {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ambar);
+    letter-spacing: 0.1em;
+    padding-top: 4px;
+  }
+  .method-item .name {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--bone);
+    line-height: 1.2;
+  }
+  .method-item .name .duration {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--bone-3);
+    margin-top: 8px;
+    letter-spacing: 0.06em;
+    font-weight: 400;
+  }
+  .method-item .desc {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--bone-3);
+    text-wrap: pretty;
+    max-width: 60ch;
+  }
+  .method-footer {
+    margin-top: 32px;
+    padding: 18px 24px;
+    background: rgba(232, 128, 12, 0.04);
+    border-left: 2px solid var(--ambar);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bone-3);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============ Equipo (sec 04) ============ */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-top: 12px;
+  }
+  .person {
+    border-top: 1px solid var(--rule-strong);
+    padding-top: 32px;
+  }
+  .person .role {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ambar);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .person .name-line {
+    font-family: var(--font-body);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    margin-bottom: 22px;
+    line-height: 1.15;
+  }
+  .person .bio {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--bone-3);
+    margin-bottom: 28px;
+    text-wrap: pretty;
+  }
+  .person .stack {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--bone-3);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    padding: 12px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .person .stack .label {
+    color: var(--ambar);
+    margin-right: 6px;
+  }
+  .team-footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bone-3);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+    max-width: 70ch;
+  }
+
+  /* ============ Contacto (sec 05) ============ */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .contact-form label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--bone-3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule-strong);
+    color: var(--bone);
+    font-family: var(--font-body);
+    font-size: 16px;
+    padding: 12px 0 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    border-color: var(--ambar);
+  }
+  .contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+  }
+  .contact-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23A8A498' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    cursor: pointer;
+  }
+  .contact-form select option {
+    background: var(--tinta);
+    color: var(--bone);
+  }
+  .contact-form .btn-primary {
+    margin-top: 24px;
+    align-self: flex-start;
+    padding: 16px 28px;
+  }
+  .contact-alt {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bone-3);
+    margin-top: 24px;
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+  }
+  .contact-alt a {
+    color: var(--ambar);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .contact-alt a:hover { border-color: var(--ambar); }
+
+  /* ============ Footer ============ */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 56px var(--pad-x) 40px;
+  }
+  .footer-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .footer-col h5 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--bone-3);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    font-weight: 400;
+  }
+  .footer-col p,
+  .footer-col a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bone);
+    text-decoration: none;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    display: block;
+  }
+  .footer-col a:hover { color: var(--ambar); }
+  .footer-mark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .footer-mark .mark { width: 24px; height: 24px; }
+  .footer-mark .wm {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+  }
+  .footer-mark .wm em { font-style: normal; color: var(--bone); }
+  .footer-mark .wm span { color: var(--bone-3); }
+
+  .footer-bottom {
+    max-width: var(--max-w);
+    margin: 56px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--mute);
+    letter-spacing: 0.06em;
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 960px) {
+    :root { --pad-x: 28px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-right { display: none; }
+    .sec-head { grid-template-columns: 1fr; gap: 24px; }
+    .sec-head .left { position: static; }
+    .caps-grid { grid-template-columns: 1fr; }
+    .method-item { grid-template-columns: 60px 1fr; gap: 24px; }
+    .method-item .desc { grid-column: 1 / -1; padding-left: 84px; }
+    .team-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .nav-links a:not(.cta) { display: none; }
+    .hero-pillars { flex-wrap: wrap; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Símbolo SVG (sprite) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 292 290">
+      <!-- 5 aspas en simetría rotacional 72° -->
+      <g>
+        <path d="M146 22 L172 70 L146 88 L120 70 Z"/>
+        <path d="M260 92 L218 122 L196 102 L218 64 Z"/>
+        <path d="M218 224 L168 218 L168 188 L210 178 Z"/>
+        <path d="M74 224 L82 178 L124 188 L124 218 Z"/>
+        <path d="M32 92 L74 64 L96 102 L74 122 Z"/>
+      </g>
+      <!-- Rombo central ámbar -->
+      <path data-rombo="true" d="M146 122 L168 145 L146 168 L124 145 Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <svg class="mark mk-bone mk-rombo" viewBox="0 0 292 290"><use href="#mark"/></svg>
+      <span class="wm"><em>Wizdom</em><span>Data</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#capacidades">capacidades</a>
+      <a href="#metodologia">metodología</a>
+      <a href="#equipo">equipo</a>
+      <a href="#contacto" class="cta">Conversemos</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="eyebrow">
+        <span>Consultora de Data Analytics · Chile</span>
+      </div>
+      <div class="hero-en">from raw data to real impact</div>
+      <h1 class="h-display hero-title">
+        De datos a <span class="accent">decisiones</span><br>
+        que mueven<br>
+        el negocio.
+      </h1>
+      <p class="hero-sub">
+        Construimos la infraestructura analítica que las empresas modernas necesitan para decidir más rápido, automatizar lo repetitivo, y aprovechar lo que la IA ya hace posible.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn btn-primary">
+          Conversemos un proyecto
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="#metodologia" class="btn btn-secondary">
+          Cómo trabajamos
+        </a>
+      </div>
+      <div class="hero-pillars">
+        <span>Data</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Analytics</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>AI</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <svg class="hero-mark-big mk-bone mk-rombo" viewBox="0 0 292 290" style="opacity:0.08">
+        <use href="#mark"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · CAPACIDADES ============ -->
+<section class="sec" id="capacidades">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">02</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Capacidades</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        El partner analítico que las<br>
+        empresas modernas <span class="accent">necesitan</span>.
+      </h2>
+      <p class="body-l">
+        Diseñamos, construimos y operamos la capa de datos completa — desde el pipeline que ingesta tus sistemas hasta el modelo que predice qué cliente vas a perder el próximo mes. Trabajamos con el stack moderno y con la IA aplicada al negocio real, no a la demo.
+      </p>
+    </div>
+  </div>
+
+  <div class="caps-grid">
+    <div class="cap-card">
+      <div class="num">01 · Data Engineering</div>
+      <h3 class="h-3">Pipelines, warehouses, integraciones en tiempo real.</h3>
+      <p class="body">
+        Centralizamos la información dispersa entre sistemas operacionales, planillas y APIs externas. Diseñamos la base sobre la que después corre todo lo demás — analítica, modelos, automatizaciones.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>dbt · BigQuery · Databricks · AWS · Azure · GCP · SQL Server · Snowflake
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="num">02 · Business Intelligence</div>
+      <h3 class="h-3">Dashboards que tu equipo abre todos los días.</h3>
+      <p class="body">
+        Reportes ejecutivos para directorio, vistas operativas para mandos medios, métricas correctas para cada rol. Pocas vistas, bien pensadas, sobre datos que cuadran.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>Power BI · Tableau · Looker · Metabase
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="num">03 · AI &amp; Machine Learning</div>
+      <h3 class="h-3">Modelos predictivos y agentes con LLMs.</h3>
+      <p class="body">
+        Desde un modelo de churn clásico hasta un chatbot que responde preguntas de negocio sobre tu data warehouse. Asistentes conversacionales, automatización con IA, modelos en producción.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>Python · scikit-learn · MLflow · OpenAI · Anthropic · LangChain · Vertex AI
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="num">04 · Automatización &amp; Data Products</div>
+      <h3 class="h-3">Cuando el proceso no existe, lo construimos.</h3>
+      <p class="body">
+        Si una tarea se hace cinco veces al mes, la automatizamos. Si tu equipo necesita una herramienta interna que no existe en el mercado, la diseñamos a medida. Apps internas, integraciones, productos de datos.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>Python · Streamlit · n8n · APIs custom · Cloud Functions
+      </div>
+    </div>
+  </div>
+
+  <div class="caps-footer">
+    No vendemos paquetes cerrados. Cada proyecto se diseña según lo que el negocio necesita resolver — y dónde está hoy en su madurez de datos.
+  </div>
+</section>
+
+<!-- ============ 03 · METODOLOGÍA ============ -->
+<section class="sec" id="metodologia">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">03</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Metodología</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        Discovery primero. Pipeline después.<br>
+        Dashboards <span class="accent">al final</span>.
+      </h2>
+      <p class="body-l">
+        La mayoría de los proyectos de datos fallan porque empiezan al revés. Compran una herramienta, después definen reportes, y al final descubren que los datos no estaban listos. Nosotros trabajamos en el orden inverso.
+      </p>
+    </div>
+  </div>
+
+  <div class="method-list">
+    <div class="method-item">
+      <div class="step">01</div>
+      <div class="name">Discovery<span class="duration">Una a tres semanas</span></div>
+      <div class="desc">
+        Entendemos el negocio antes de tocar una línea de código. Cuáles son las decisiones que hoy se toman a ciegas, qué datos existen, dónde viven, quién los usa. Salimos con un documento corto: qué vale la pena construir, en qué orden, y qué no.
+      </div>
+    </div>
+
+    <div class="method-item">
+      <div class="step">02</div>
+      <div class="name">Diseño<span class="duration">Modelo, arquitectura, definiciones</span></div>
+      <div class="desc">
+        Modelo de datos, arquitectura, definiciones de negocio acordadas con cada área. Esto es lo que evita que en seis meses estén discutiendo otra vez qué significa "cliente activo".
+      </div>
+    </div>
+
+    <div class="method-item">
+      <div class="step">03</div>
+      <div class="name">Implementación<span class="duration">Sprints de dos semanas</span></div>
+      <div class="desc">
+        Construimos el data warehouse y los dashboards en sprints cortos. Cada dos semanas tu equipo ve algo funcionando, no un PowerPoint de avance.
+      </div>
+    </div>
+
+    <div class="method-item">
+      <div class="step">04</div>
+      <div class="name">Handoff<span class="duration">Documentación + capacitación</span></div>
+      <div class="desc">
+        Documentación, capacitación al equipo interno, código en tu repositorio. Si querés que sigamos haciendo mantención, ofrecemos retainer mensual. Si querés tomarlo internamente, te lo dejamos preparado para eso.
+      </div>
+    </div>
+  </div>
+
+  <div class="method-footer">
+    Trabajamos sobre <strong style="color:var(--bone);font-weight:500">wizdomdata-framework</strong> — nuestro stack interno de templates, procesos y agentes de IA. Si te interesa cómo lo construimos, escribinos.
+  </div>
+</section>
+
+<!-- ============ 04 · EQUIPO ============ -->
+<section class="sec" id="equipo">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">04</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Equipo</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        Dos ingenieros.<br>
+        Sin <span class="accent">intermediarios</span>.
+      </h2>
+      <p class="body-l">
+        WizdomData es una consultora boutique fundada en 2026. No tenemos un equipo de ventas que te pasa a un equipo de delivery. Quienes te venden el proyecto son quienes lo construyen.
+      </p>
+    </div>
+  </div>
+
+  <div class="team-grid">
+    <div class="person">
+      <div class="role">Co-fundador · Data Engineering &amp; Analytics</div>
+      <div class="name-line">Juan Ignacio<br>Navarrete</div>
+      <p class="bio">
+        Ingeniero Civil Industrial UTFSM. Diplomado en Analytics, PUC. AWS Certified Data Engineer. Siete años trabajando con datos en industrias tradicionales — cuatro de ellos como freelance para una aseguradora chilena, donde el BI que dejé sigue operando.
+      </p>
+      <div class="stack">
+        <span class="label">Stack</span>dbt · BigQuery · SQL Server · Power BI · Python · AWS
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="role">Co-fundador · Data Science</div>
+      <div class="name-line">Stefano<br>Schiappacasse</div>
+      <p class="bio">
+        Ingeniero Civil Industrial UTFSM. Magíster en Data Science, Universidad de Chile (distinción máxima). Trabaja en producción con modelos predictivos a escala industrial.
+      </p>
+      <div class="stack">
+        <span class="label">Stack</span>Python · Databricks · scikit-learn · MLflow · PySpark
+      </div>
+    </div>
+  </div>
+
+  <div class="team-footer">
+    Si tu proyecto necesita más manos, traemos especialistas de nuestra red. Pero el diseño y la responsabilidad técnica nunca se delegan.
+  </div>
+</section>
+
+<!-- ============ 05 · CONTACTO ============ -->
+<section class="sec" id="contacto">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">05</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Hablemos</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        ¿Tenés un problema de datos<br>
+        <span class="accent">concreto</span>?
+      </h2>
+      <p class="body-l">
+        Escribinos describiendo el problema. No hace falta que sepas qué herramientas se usan ni qué arquitectura corresponde — eso es nuestro trabajo. Respondemos en menos de 48 horas hábiles.
+      </p>
+    </div>
+  </div>
+
+  <div class="contact-wrap">
+    <form class="contact-form" onsubmit="event.preventDefault(); alert('Mockup — formulario no conectado');">
+      <div>
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+      </div>
+      <div>
+        <label for="empresa">Empresa</label>
+        <input type="text" id="empresa" placeholder="Empresa donde trabajás" required>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="tu@empresa.cl" required>
+      </div>
+      <div>
+        <label for="industria">Industria</label>
+        <select id="industria" required>
+          <option value="">Selecciona una</option>
+          <option>Seguros</option>
+          <option>Transporte</option>
+          <option>Holding</option>
+          <option>Retail</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div>
+        <label for="mensaje">Contanos brevemente el problema</label>
+        <textarea id="mensaje" placeholder="¿Qué necesitás resolver?" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        Enviar consulta
+        <span class="btn-arrow">→</span>
+      </button>
+    </form>
+
+    <div>
+      <div class="contact-alt">
+        O escribinos directo:<br>
+        <a href="mailto:hola@wizdomdata.cl">hola@wizdomdata.cl</a>
+      </div>
+      <div class="contact-alt" style="margin-top:32px">
+        Para cualquier proyecto, primero escuchamos antes de proponer. La primera conversación no compromete a nada.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-mark">
+        <svg class="mark mk-bone mk-rombo" viewBox="0 0 292 290"><use href="#mark"/></svg>
+        <span class="wm"><em>Wizdom</em><span>Data</span></span>
+      </div>
+      <p style="color:var(--bone-3);font-size:12px;line-height:1.7;letter-spacing:0.04em;">
+        Consultora de Data Analytics<br>
+        Chile · Operaciones remotas
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h5>Contacto</h5>
+      <a href="mailto:hola@wizdomdata.cl">hola@wizdomdata.cl</a>
+      <a href="#">linkedin.com/company/wizdomdata</a>
+    </div>
+
+    <div class="footer-col">
+      <h5>Sitio</h5>
+      <a href="#capacidades">Capacidades</a>
+      <a href="#metodologia">Metodología</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 WizdomData SpA</span>
+    <span>Edición 01 · v1.0</span>
+  </div>
+</footer>
+
+</body>
+</html>

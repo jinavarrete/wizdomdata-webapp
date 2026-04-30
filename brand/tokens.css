@@ -1,0 +1,135 @@
+/* ============================================================
+   WizdomData — Brand Tokens
+   Canonical source of truth for all brand values.
+   Edit this file only when updating the brand book.
+   ============================================================ */
+
+:root {
+  /* ---------- Color: Primary ---------- */
+  --tinta:        #0C0E12;
+  --bone:         #E8E3D6;
+  --ambar:        #E8800C;
+
+  /* ---------- Color: Secondary ---------- */
+  --tinta-2:      #2A2D33;
+  --bone-light:   #F3EFE7;
+  --bone-3:       #A8A498;
+  --mute:         #6B6A60;
+
+  /* ---------- Rules (dividers / borders) ---------- */
+  /* On bone backgrounds */
+  --rule-on-bone:        rgba(12, 14, 18, 0.12);
+  --rule-on-bone-strong: rgba(12, 14, 18, 0.22);
+  /* On tinta backgrounds */
+  --rule-on-tinta:        rgba(232, 227, 214, 0.12);
+  --rule-on-tinta-strong: rgba(232, 227, 214, 0.22);
+
+  /* Default rule (assumes dark mode by default — flip in light mode) */
+  --rule:        var(--rule-on-tinta);
+  --rule-strong: var(--rule-on-tinta-strong);
+
+  /* ---------- Typography: Families ---------- */
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Menlo', monospace;
+
+  /* ---------- Typography: Scale ---------- */
+  --fs-display: clamp(48px, 7.5vw, 96px);
+  --fs-h1:      56px;
+  --fs-h2:      40px;
+  --fs-h3:      22px;
+  --fs-h4:      18px;
+  --fs-body-l:  17px;
+  --fs-body:    15px;
+  --fs-meta:    11px;
+
+  /* ---------- Typography: Tracking ---------- */
+  --tracking-display: -0.035em;
+  --tracking-h1:      -0.025em;
+  --tracking-h2:      -0.02em;
+  --tracking-h3:      -0.015em;
+  --tracking-body:    0;
+  --tracking-eyebrow: 0.16em;
+  --tracking-mono:    0.06em;
+
+  /* ---------- Typography: Line-height ---------- */
+  --lh-display: 0.98;
+  --lh-heading: 1.1;
+  --lh-body:    1.6;
+  --lh-tight:   1.25;
+
+  /* ---------- Typography: Weight ---------- */
+  --fw-display: 600;
+  --fw-medium:  500;
+  --fw-regular: 400;
+
+  /* ---------- Spacing scale ---------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 100px;
+  --sp-30: 120px;
+  --sp-36: 140px;
+
+  /* ---------- Layout ---------- */
+  --max-width: 1280px;
+  --pad-x:     64px;
+  --pad-x-mobile: 28px;
+
+  /* ---------- Border-radius ---------- */
+  --radius:    2px;
+
+  /* ---------- Border-width ---------- */
+  --bw:        1px;
+
+  /* ---------- Transitions ---------- */
+  --t-fast: 0.15s ease;
+  --t-base: 0.2s ease;
+  --t-slow: 0.3s ease;
+
+  /* ---------- Shadows (use sparingly — only on card hover) ---------- */
+  --shadow-card-hover: 0 12px 28px -16px rgba(12, 14, 18, 0.18);
+}
+
+/* ============================================================
+   Light mode (default base)
+   ============================================================ */
+[data-theme='light'] {
+  --bg:         var(--bone);
+  --bg-elev:    var(--bone-light);
+  --fg:         var(--tinta);
+  --fg-soft:    var(--mute);
+  --rule:       var(--rule-on-bone);
+  --rule-strong: var(--rule-on-bone-strong);
+}
+
+/* ============================================================
+   Dark mode (preferred for marketing site)
+   ============================================================ */
+[data-theme='dark'],
+:root {
+  --bg:         var(--tinta);
+  --bg-elev:    var(--tinta-2);
+  --fg:         var(--bone);
+  --fg-soft:    var(--bone-3);
+  --rule:       var(--rule-on-tinta);
+  --rule-strong: var(--rule-on-tinta-strong);
+}
+
+/* ============================================================
+   Mobile breakpoint adjustments
+   ============================================================ */
+@media (max-width: 960px) {
+  :root {
+    --pad-x: var(--pad-x-mobile);
+    --fs-h1: 40px;
+    --fs-h2: 32px;
+  }
+}
