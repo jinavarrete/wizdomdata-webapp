@@ -1,153 +1,175 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Users, Target, Lightbulb, Heart } from "lucide-react";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const values = [
+const people = [
   {
-    icon: Target,
-    title: "Orientados a Resultados",
-    description: "Medimos el éxito por el impacto real en tu negocio.",
+    role: "Co-fundador · Data Engineering & Analytics",
+    name: "Juan Ignacio\nNavarrete",
+    bio: "Ingeniero Civil Industrial UTFSM. Diplomado en Analytics, PUC. AWS Certified Data Engineer. Siete años trabajando con datos en industrias tradicionales — cuatro de ellos como freelance para una aseguradora chilena, donde el BI que dejé sigue operando.",
+    stack: "dbt · BigQuery · SQL Server · Power BI · Python · AWS",
   },
   {
-    icon: Lightbulb,
-    title: "Innovación Constante",
-    description: "Aplicamos las últimas tecnologías y mejores prácticas.",
-  },
-  {
-    icon: Users,
-    title: "Colaboración",
-    description: "Trabajamos como una extensión de tu equipo.",
-  },
-  {
-    icon: Heart,
-    title: "Pasión por los Datos",
-    description: "Amamos transformar datos en insights accionables.",
+    role: "Co-fundador · Data Science",
+    name: "Stefano\nSchiappacasse",
+    bio: "Ingeniero Civil Industrial UTFSM. Magíster en Data Science, Universidad de Chile (distinción máxima). Trabaja en producción con modelos predictivos a escala industrial.",
+    stack: "Python · Databricks · scikit-learn · MLflow · PySpark",
   },
 ];
 
 const Team = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="equipo" className="py-24 bg-dark relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-
-      <div className="container mx-auto px-6 lg:px-12 relative z-10" ref={ref}>
-        {/* Section Header */}
+    <section
+      id="equipo"
+      ref={ref}
+      style={{ borderTop: "1px solid var(--rule)" }}
+    >
+      <div
+        style={{
+          padding: "120px var(--pad-x)",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        {/* Section header */}
         <motion.div
+          className="sec-head"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Nuestro <span className="gradient-text">Equipo</span>
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Un equipo multidisciplinario de expertos en datos, comprometidos con tu éxito.
-          </p>
-        </motion.div>
-
-        {/* Team Description */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-4xl mx-auto mb-16"
-        >
-          <div className="bg-dark-tertiary border border-gray-800 rounded-2xl p-8 md:p-12">
-            <div className="flex items-start space-x-4 mb-6">
-              <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center">
-                <Users size={32} className="text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-4 text-white">
-                  Expertos en Data Analytics y Cloud
-                </h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Nuestro equipo cuenta con más de 10 años de experiencia combinada en proyectos
-                  de análisis de datos, ingeniería de datos y arquitectura cloud en empresas de
-                  diversos sectores.
-                </p>
-                <p className="text-gray-300 leading-relaxed">
-                  Trabajamos con metodologías ágiles, adaptándonos a las necesidades específicas
-                  de cada cliente. Nos enfocamos en generar valor desde el día uno, con soluciones
-                  pragmáticas y escalables.
-                </p>
-              </div>
+          <div className="left">
+            <div className="eyebrow">
+              <span className="num">05</span>
+              <span className="divider">
+                <svg viewBox="0 0 292 290" className="mk-bone mk-rombo" aria-hidden="true">
+                  <use href="#mark" />
+                </svg>
+              </span>
+              <span>Equipo</span>
             </div>
-
-            {/* Certifications/Skills */}
-            <div className="flex flex-wrap gap-3 mt-8">
-              {[
-                "AWS Certified",
-                "Azure Expert",
-                "Google Cloud",
-                "Tableau Desktop",
-                "Power BI Expert",
-                "Python Expert",
-                "SQL Master",
-                "dbt Specialist",
-              ].map((skill) => (
-                <span
-                  key={skill}
-                  className="px-4 py-2 text-sm font-medium bg-primary/10 text-primary border border-primary/30 rounded-full"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
+          </div>
+          <div className="right">
+            <h2 className="h-section" style={{ marginBottom: 24 }}>
+              Dos ingenieros.<br />
+              Sin <span className="accent">intermediarios</span>.
+            </h2>
+            <p className="body-l">
+              WizdomData es una consultora boutique fundada en 2026. No tenemos
+              un equipo de ventas que te pasa a un equipo de delivery. Quienes te
+              venden el proyecto son quienes lo construyen.
+            </p>
           </div>
         </motion.div>
 
-        {/* Values Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-12"
+        {/* Team grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 64,
+            marginTop: 12,
+          }}
+          className="team-grid"
         >
-          <h3 className="text-3xl font-bold text-center mb-12">Nuestros Valores</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                className="bg-dark-tertiary border border-gray-800 rounded-xl p-6 text-center hover:border-primary/50 transition-all duration-300 group"
+          {people.map((person, i) => (
+            <motion.div
+              key={person.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.15 + i * 0.12 }}
+              style={{
+                borderTop: "1px solid var(--rule-strong)",
+                paddingTop: 32,
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 11,
+                  color: "var(--ambar)",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  marginBottom: 14,
+                }}
               >
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-blue-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <value.icon size={28} className="text-primary" />
-                </div>
-                <h4 className="text-lg font-bold mb-2 text-white">{value.title}</h4>
-                <p className="text-gray-400 text-sm">{value.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                {person.role}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 28,
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  color: "var(--bone)",
+                  marginBottom: 22,
+                  lineHeight: 1.15,
+                  whiteSpace: "pre-line",
+                }}
+              >
+                {person.name}
+              </div>
+              <p
+                style={{
+                  fontSize: 15,
+                  lineHeight: 1.7,
+                  color: "var(--bone-3)",
+                  marginBottom: 28,
+                  textWrap: "pretty" as React.CSSProperties["textWrap"],
+                }}
+              >
+                {person.bio}
+              </p>
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 11,
+                  color: "var(--bone-3)",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1.5,
+                  padding: "12px 0",
+                  borderTop: "1px solid var(--rule)",
+                  borderBottom: "1px solid var(--rule)",
+                }}
+              >
+                <span style={{ color: "var(--ambar)", marginRight: 6 }}>Stack</span>
+                {person.stack}
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center"
+        {/* Footer note */}
+        <motion.p
+          className="meta-mono"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.45 }}
+          style={{
+            marginTop: 56,
+            paddingTop: 24,
+            borderTop: "1px solid var(--rule)",
+            lineHeight: 1.7,
+            maxWidth: "70ch",
+          }}
         >
-          <p className="text-lg text-gray-300 mb-6">
-            ¿Quieres conocer más sobre cómo trabajamos?
-          </p>
-          <a href="#contacto" className="btn-primary inline-block">
-            Agendemos una reunión
-          </a>
-        </motion.div>
+          Si tu proyecto necesita más manos, traemos especialistas de nuestra
+          red. Pero el diseño y la responsabilidad técnica nunca se delegan.
+        </motion.p>
       </div>
+
+      <style>{`
+        @media (max-width: 960px) {
+          .team-grid {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

@@ -1,7 +1,8 @@
 import HeroSection from "./components/HeroSection";
-import Services from "./components/Services";
-import Methodology from "./components/Methodology";
-import Cases from "./components/Cases";
+import Narrativa from "./components/Narrativa";
+import Impacto from "./components/Impacto";
+import Postura from "./components/Postura";
+import Capacidades from "./components/Capacidades";
 import Team from "./components/Team";
 import ContactForm from "./components/ContactForm";
 
@@ -9,9 +10,10 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <Services />
-      <Methodology />
-      <Cases />
+      <Narrativa />
+      <Impacto />
+      <Postura />
+      <Capacidades />
       <Team />
       <ContactForm />
     </>

@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WizdomData · Partner analítico para empresas modernas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ Tokens del brandbook ============ */
+  :root {
+    --tinta: #0C0E12;
+    --tinta-2: #2A2D33;
+    --bone: #E8E3D6;
+    --bone-light: #F2EEE3;
+    --bone-3: #A8A498;
+    --ambar: #E8800C;
+    --rule: rgba(232, 227, 214, 0.12);
+    --rule-strong: rgba(232, 227, 214, 0.22);
+    --mute: #6E6A60;
+
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --max-w: 1280px;
+    --pad-x: 64px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--tinta);
+    color: var(--bone);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ============ Símbolo ============ */
+  .mark { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+  .mk-bone path:not([data-rombo]) { fill: var(--bone); }
+  .mk-tinta path:not([data-rombo]) { fill: var(--tinta); }
+  .mk-rombo path[data-rombo] { fill: var(--ambar); }
+
+  /* ============ Layout helpers ============ */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--pad-x);
+  }
+
+  .divider {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+  }
+  .divider svg { width: 10px; height: 10px; }
+
+  .accent {
+    color: var(--ambar);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* ============ Navbar ============ */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(12, 14, 18, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px var(--pad-x);
+    max-width: var(--max-w); margin: 0 auto;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--bone);
+  }
+  .logo .mark { width: 28px; height: 28px; }
+  .logo .wm {
+    font-family: var(--font-body); font-weight: 600; font-size: 18px;
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .logo .wm em { font-style: normal; color: var(--bone); }
+  .logo .wm span { color: var(--bone-3); }
+
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em;
+    color: var(--bone-3); text-decoration: none;
+    transition: color 0.2s ease; text-transform: lowercase;
+  }
+  .nav-links a:hover { color: var(--bone); }
+  .nav-links a.cta {
+    color: var(--tinta); background: var(--ambar);
+    padding: 10px 18px; border-radius: 2px; font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .nav-links a.cta:hover { background: var(--bone); color: var(--tinta); }
+
+  /* ============ Section base ============ */
+  section { position: relative; }
+
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ambar);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .num { color: var(--bone-3); }
+
+  .h-display {
+    font-family: var(--font-body); font-weight: 600;
+    font-size: clamp(48px, 7.5vw, 96px);
+    line-height: 0.98; letter-spacing: -0.035em;
+    color: var(--bone);
+  }
+  .h-section {
+    font-family: var(--font-body); font-weight: 600;
+    font-size: clamp(36px, 4.5vw, 56px);
+    line-height: 1.05; letter-spacing: -0.025em;
+    color: var(--bone);
+  }
+  .h-mid {
+    font-family: var(--font-body); font-weight: 600;
+    font-size: clamp(28px, 3.2vw, 42px);
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--bone);
+  }
+  .h-3 {
+    font-family: var(--font-body); font-weight: 500; font-size: 22px;
+    line-height: 1.25; letter-spacing: -0.015em;
+    color: var(--bone);
+  }
+  .body-l {
+    font-size: 17px; line-height: 1.6;
+    color: var(--bone-3); text-wrap: pretty;
+  }
+  .body {
+    font-size: 15px; line-height: 1.65;
+    color: var(--bone-3);
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 100px var(--pad-x) 140px;
+    max-width: var(--max-w); margin: 0 auto;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 120px; align-items: end;
+    position: relative; z-index: 2;
+  }
+  .hero-left .eyebrow {
+    margin-bottom: 56px; padding-top: 60px;
+  }
+  .hero-en {
+    font-family: var(--font-mono); font-size: 13px;
+    color: var(--ambar); margin-bottom: 28px;
+    letter-spacing: 0.04em; font-weight: 500;
+  }
+  .hero-title { margin-bottom: 36px; }
+  .hero-sub {
+    font-size: 19px; line-height: 1.55;
+    color: var(--bone-3); max-width: 52ch;
+    margin-bottom: 56px; text-wrap: pretty;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; align-items: center;
+    margin-bottom: 80px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    border: 1px solid transparent; border-radius: 2px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-primary { background: var(--ambar); color: var(--tinta); }
+  .btn-primary:hover { background: var(--bone); color: var(--tinta); }
+  .btn-secondary {
+    background: transparent; color: var(--bone);
+    border-color: var(--rule-strong);
+  }
+  .btn-secondary:hover { border-color: var(--bone); }
+  .btn-arrow { transition: transform 0.2s ease; }
+  .btn:hover .btn-arrow { transform: translateX(3px); }
+
+  .hero-pillars {
+    display: flex; align-items: center; gap: 18px;
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.18em; color: var(--bone-3);
+    text-transform: uppercase;
+  }
+  .hero-pillars .divider svg path[data-rombo] { fill: var(--ambar); }
+  .hero-pillars .divider svg path:not([data-rombo]) { fill: var(--bone-3); }
+
+  .hero-right {
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 24px; position: relative;
+  }
+  .hero-mark-big {
+    width: 380px; height: 380px;
+    opacity: 0.08;
+    animation: slowSpin 80s linear infinite;
+  }
+  @keyframes slowSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, var(--rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.4;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    z-index: 1; pointer-events: none;
+  }
+
+  /* ============ Section common ============ */
+  .sec {
+    padding: 120px var(--pad-x);
+    max-width: var(--max-w); margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+  .sec-head {
+    display: grid; grid-template-columns: 220px 1fr;
+    gap: 80px; align-items: start;
+    margin-bottom: 80px;
+  }
+  .sec-head .left { position: sticky; top: 100px; }
+  .sec-head .right { max-width: 720px; }
+  .sec-head .right .h-section { margin-bottom: 24px; }
+
+  /* ============ 01 · NARRATIVA (3 movimientos) ============ */
+  .narrative {
+    padding: 140px var(--pad-x) 120px;
+    max-width: var(--max-w); margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+  .narrative-head {
+    margin-bottom: 100px;
+    max-width: 720px;
+  }
+  .narrative-head .eyebrow {
+    margin-bottom: 32px;
+  }
+  .narrative-head .lead {
+    font-family: var(--font-body);
+    font-size: clamp(22px, 2.4vw, 28px);
+    line-height: 1.45; letter-spacing: -0.01em;
+    color: var(--bone-3); text-wrap: pretty;
+    font-weight: 400;
+  }
+  .narrative-head .lead em {
+    color: var(--bone); font-style: normal;
+  }
+
+  .movement {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    padding: 64px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .movement:last-child { border-bottom: 1px solid var(--rule); }
+  .movement .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ambar);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .movement .label .num {
+    color: var(--bone-3);
+    font-weight: 500;
+  }
+  .movement .headline {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    color: var(--bone);
+  }
+  .movement .desc {
+    font-size: 17px; line-height: 1.65;
+    color: var(--bone-3); text-wrap: pretty;
+  }
+  .movement .desc + .desc { margin-top: 18px; }
+
+  /* Separador con rombo entre movimientos */
+  .movement-sep {
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px 0;
+  }
+  .movement-sep svg { width: 12px; height: 12px; opacity: 0.55; }
+
+  /* ============ 02 · IMPACTO ============ */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .impact-card {
+    padding: 56px 48px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.3s ease;
+    position: relative;
+  }
+  .impact-card:hover {
+    background: rgba(232, 227, 214, 0.02);
+  }
+  .impact-card .num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ambar);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+    display: block;
+  }
+  .impact-card .claim {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.018em;
+    color: var(--bone);
+    margin-bottom: 20px;
+    text-wrap: pretty;
+  }
+  .impact-card .body {
+    max-width: 48ch;
+  }
+
+  /* ============ 03 · POSTURA / Cómo trabajamos ============ */
+  .stance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 16px;
+  }
+  .stance-item {
+    border-top: 1px solid var(--rule-strong);
+    padding-top: 28px;
+  }
+  .stance-item .pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ambar);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .stance-item .h-3 {
+    margin-bottom: 18px;
+  }
+  .stance-item .body {
+    text-wrap: pretty;
+  }
+  .stance-footer {
+    margin-top: 56px;
+    padding: 18px 24px;
+    background: rgba(232, 128, 12, 0.04);
+    border-left: 2px solid var(--ambar);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bone-3);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+  .stance-footer strong {
+    color: var(--bone); font-weight: 500;
+  }
+
+  /* ============ 04 · CAPACIDADES ============ */
+  .caps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .cap-card {
+    padding: 48px 40px 56px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.3s ease;
+  }
+  .cap-card:hover {
+    background: rgba(232, 227, 214, 0.02);
+  }
+  .cap-card .num {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--ambar); letter-spacing: 0.16em;
+    margin-bottom: 18px;
+  }
+  .cap-card .h-3 { margin-bottom: 16px; }
+  .cap-card .body {
+    margin-bottom: 32px; max-width: 46ch;
+  }
+  .cap-card .stack-line {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--bone-3); letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+  .cap-card .stack-line .label {
+    color: var(--ambar); margin-right: 6px;
+  }
+  .caps-footer {
+    margin-top: 48px; padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--bone-3); letter-spacing: 0.04em;
+    line-height: 1.7; max-width: 70ch;
+  }
+
+  /* ============ 05 · EQUIPO ============ */
+  .team-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; margin-top: 12px;
+  }
+  .person {
+    border-top: 1px solid var(--rule-strong);
+    padding-top: 32px;
+  }
+  .person .role {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--ambar); letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  .person .name-line {
+    font-family: var(--font-body); font-size: 28px;
+    font-weight: 600; letter-spacing: -0.02em;
+    color: var(--bone); margin-bottom: 22px; line-height: 1.15;
+  }
+  .person .bio {
+    font-size: 15px; line-height: 1.7;
+    color: var(--bone-3); margin-bottom: 28px;
+    text-wrap: pretty;
+  }
+  .person .stack {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--bone-3); letter-spacing: 0.04em;
+    line-height: 1.5; padding: 12px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .person .stack .label { color: var(--ambar); margin-right: 6px; }
+  .team-footer {
+    margin-top: 56px; padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--bone-3); letter-spacing: 0.04em;
+    line-height: 1.7; max-width: 70ch;
+  }
+
+  /* ============ 06 · CIERRE / CONTACTO ============ */
+  .closing {
+    padding: 140px var(--pad-x) 120px;
+    max-width: var(--max-w); margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+  .closing-head {
+    max-width: 820px;
+    margin-bottom: 80px;
+  }
+  .closing-head .eyebrow {
+    margin-bottom: 32px;
+  }
+  .closing-head .h-section {
+    margin-bottom: 28px;
+  }
+  .closing-head .body-l {
+    text-wrap: pretty;
+  }
+
+  .closing-cta-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    border-top: 1px solid var(--rule);
+    padding-top: 56px;
+    margin-bottom: 64px;
+  }
+  .cta-primary-card {
+    padding: 36px;
+    background: rgba(232, 128, 12, 0.05);
+    border: 1px solid rgba(232, 128, 12, 0.2);
+    border-radius: 2px;
+  }
+  .cta-primary-card .pill {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--ambar);
+    letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .cta-primary-card .h-3 { margin-bottom: 14px; }
+  .cta-primary-card .body { margin-bottom: 24px; }
+
+  .cta-secondary-card {
+    padding: 36px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 2px;
+  }
+  .cta-secondary-card .pill {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--bone-3);
+    letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .cta-secondary-card .h-3 { margin-bottom: 14px; }
+  .cta-secondary-card .body { margin-bottom: 24px; }
+
+  .closing-meta {
+    border-top: 1px solid var(--rule);
+    padding-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bone-3);
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .closing-meta a {
+    color: var(--ambar); text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .closing-meta a:hover { border-color: var(--ambar); }
+  .closing-meta .sep {
+    color: var(--mute);
+  }
+
+  /* ============ Footer ============ */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 56px var(--pad-x) 40px;
+  }
+  .footer-inner {
+    max-width: var(--max-w); margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px; align-items: start;
+  }
+  .footer-col h5 {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--bone-3); letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 18px;
+    font-weight: 400;
+  }
+  .footer-col p, .footer-col a {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--bone); text-decoration: none;
+    line-height: 1.8; letter-spacing: 0.02em;
+    display: block;
+  }
+  .footer-col a:hover { color: var(--ambar); }
+  .footer-mark {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .footer-mark .mark { width: 24px; height: 24px; }
+  .footer-mark .wm {
+    font-family: var(--font-body); font-weight: 600;
+    font-size: 16px; letter-spacing: -0.02em;
+  }
+  .footer-mark .wm em { font-style: normal; color: var(--bone); }
+  .footer-mark .wm span { color: var(--bone-3); }
+
+  .footer-bottom {
+    max-width: var(--max-w); margin: 56px auto 0;
+    padding-top: 24px; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 10.5px;
+    color: var(--mute); letter-spacing: 0.06em;
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 960px) {
+    :root { --pad-x: 28px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-right { display: none; }
+    .sec-head { grid-template-columns: 1fr; gap: 24px; }
+    .sec-head .left { position: static; }
+    .narrative { padding: 80px 28px; }
+    .narrative-head { margin-bottom: 48px; }
+    .movement { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+    .impact-grid { grid-template-columns: 1fr; }
+    .impact-card { padding: 40px 32px; }
+    .stance-grid { grid-template-columns: 1fr; gap: 32px; }
+    .caps-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; gap: 40px; }
+    .closing-cta-block { grid-template-columns: 1fr; gap: 24px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .nav-links a:not(.cta) { display: none; }
+    .hero-pillars { flex-wrap: wrap; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Símbolo SVG (sprite) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 292 290">
+      <g>
+        <path d="M146 22 L172 70 L146 88 L120 70 Z"/>
+        <path d="M260 92 L218 122 L196 102 L218 64 Z"/>
+        <path d="M218 224 L168 218 L168 188 L210 178 Z"/>
+        <path d="M74 224 L82 178 L124 188 L124 218 Z"/>
+        <path d="M32 92 L74 64 L96 102 L74 122 Z"/>
+      </g>
+      <path data-rombo="true" d="M146 122 L168 145 L146 168 L124 145 Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <svg class="mark mk-bone mk-rombo" viewBox="0 0 292 290"><use href="#mark"/></svg>
+      <span class="wm"><em>Wizdom</em><span>Data</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#porque">por qué</a>
+      <a href="#impacto">impacto</a>
+      <a href="#postura">cómo trabajamos</a>
+      <a href="#capacidades">capacidades</a>
+      <a href="#equipo">equipo</a>
+      <a href="#contacto" class="cta">Conversemos</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="eyebrow">
+        <span>Consultora de Data Analytics · Chile</span>
+      </div>
+      <div class="hero-en">from raw data to real impact</div>
+      <h1 class="h-display hero-title">
+        El dato existe.<br>
+        La <span class="accent">decisión</span>,<br>
+        no siempre.
+      </h1>
+      <p class="hero-sub">
+        WizdomData es el partner analítico que se sienta con tu equipo antes de que se construya el primer dashboard — para definir qué vale la pena medir, qué datos te dan ventaja, y qué proyectos sí mueven el negocio.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn btn-primary">
+          Conversemos un proyecto
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="#postura" class="btn btn-secondary">
+          Cómo trabajamos
+        </a>
+      </div>
+      <div class="hero-pillars">
+        <span>Data</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Analytics</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>AI</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <svg class="hero-mark-big mk-bone mk-rombo" viewBox="0 0 292 290">
+        <use href="#mark"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 · NARRATIVA / Por qué existimos ============ -->
+<section class="narrative" id="porque">
+  <div class="narrative-head">
+    <div class="eyebrow">
+      <span class="num">01</span>
+      <span class="divider">
+        <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+      </span>
+      <span>Por qué existimos</span>
+    </div>
+    <p class="lead">
+      <em>La paradoja de las empresas modernas:</em> tienen más datos de los que pueden leer, y menos decisiones claras de las que necesitan tomar. Esa distancia entre la información y la acción es donde nosotros trabajamos.
+    </p>
+  </div>
+
+  <!-- MOVIMIENTO 1 · El problema -->
+  <div class="movement">
+    <div>
+      <div class="label">
+        <span class="num">01</span>
+        <span>El problema</span>
+      </div>
+      <h2 class="headline">
+        Cada empresa tiene<br>
+        más datos de los que<br>
+        puede leer.<br>
+        Y <span class="accent">menos decisiones</span><br>
+        claras de las que<br>
+        necesita tomar.
+      </h2>
+    </div>
+    <div>
+      <p class="desc">
+        Las empresas modernas invierten años cargando datos a sistemas, integrando herramientas, comprando licencias de BI — y siguen tomando decisiones críticas con la misma planilla Excel que circula por mail desde hace cinco años.
+      </p>
+      <p class="desc">
+        El problema no es la falta de datos. Es la falta de un puente entre los datos y la decisión. Y ese puente no se compra: se construye con criterio.
+      </p>
+    </div>
+  </div>
+
+  <!-- MOVIMIENTO 2 · El insight -->
+  <div class="movement">
+    <div>
+      <div class="label">
+        <span class="num">02</span>
+        <span>El insight</span>
+      </div>
+      <h2 class="headline">
+        Los datos no<br>
+        generan valor.<br>
+        Las <span class="accent">decisiones</span>,<br>
+        sí.
+      </h2>
+    </div>
+    <div>
+      <p class="desc">
+        Un data warehouse no cambia el negocio. Un dashboard tampoco. Lo que cambia el negocio es que el gerente comercial sepa qué clientes va a perder este trimestre, que finanzas cierre el mes en tres días en lugar de dos semanas, que el directorio reciba el reporte que pidió antes de que la pregunta quede obsoleta.
+      </p>
+      <p class="desc">
+        Eso no se compra con tecnología. Se construye con criterio — sabiendo qué medir, qué ignorar, y en qué orden hacerlo.
+      </p>
+    </div>
+  </div>
+
+  <!-- MOVIMIENTO 3 · La transformación -->
+  <div class="movement">
+    <div>
+      <div class="label">
+        <span class="num">03</span>
+        <span>La transformación</span>
+      </div>
+      <h2 class="headline">
+        Por eso no<br>
+        construimos<br>
+        dashboards.<br>
+        <span class="accent">Construimos</span><br>
+        la capacidad<br>
+        de decidir<br>
+        con datos.
+      </h2>
+    </div>
+    <div>
+      <p class="desc">
+        Trabajamos del lado del negocio, no del lado de la herramienta. Definimos qué vale la pena medir antes de medirlo, qué proyectos generan valor real antes de empezarlos, y qué arquitectura sostiene tu crecimiento antes de comprar la próxima licencia.
+      </p>
+      <p class="desc">
+        La tecnología es la última pieza que entra al puzzle, no la primera. Y cuando entra, entra bien — porque ya sabemos qué tiene que hacer.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · IMPACTO / Por qué importa ============ -->
+<section class="sec" id="impacto">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">02</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Por qué importa</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        Lo que cambia cuando los datos<br>
+        llegan a la <span class="accent">decisión</span>.
+      </h2>
+      <p class="body-l">
+        Los efectos de una capa analítica bien construida no se miden en dashboards entregados. Se miden en cómo opera el negocio.
+      </p>
+    </div>
+  </div>
+
+  <div class="impact-grid">
+    <div class="impact-card">
+      <span class="num">01</span>
+      <h3 class="claim">Decisiones más rápidas, no más reportes.</h3>
+      <p class="body">
+        El directorio deja de pedir el mismo reporte tres veces porque las cifras nunca cuadran. La operación deja de discutir definiciones en cada reunión. La velocidad operativa se compone — un mes de aceleración en cada decisión es un trimestre ganado al año.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="num">02</span>
+      <h3 class="claim">Eficiencia donde antes había trabajo manual.</h3>
+      <p class="body">
+        Las cinco horas semanales que tu analista pasa consolidando un Excel para el comité dejan de existir. Los procesos que se hacían a mano por excepción pasan a hacerse solos por defecto. El equipo deja de operar la planilla y empieza a operar el negocio.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="num">03</span>
+      <h3 class="claim">Ventaja antes que el resto.</h3>
+      <p class="body">
+        Cuando tu competencia recién está pidiendo un dashboard de churn, vos ya tenés el modelo predictivo en producción. Cuando recién se preguntan qué clientes priorizar, vos ya tenés la segmentación operando. La curva de aprendizaje analítico se compone — y empezar antes vale más cada año.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="num">04</span>
+      <h3 class="claim">El directorio decide con la misma data que opera la línea.</h3>
+      <p class="body">
+        La diferencia entre una empresa data-madura y una que no lo es no está en la herramienta de BI. Está en si la cifra que ve el gerente general es la misma que ve el supervisor de operaciones. Cuando esa alineación existe, el directorio decide rápido. Cuando no existe, decide tarde y mal.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · POSTURA / Cómo trabajamos ============ -->
+<section class="sec" id="postura">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">03</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Cómo trabajamos</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        Partner analítico,<br>
+        no <span class="accent">proveedor</span>.
+      </h2>
+      <p class="body-l">
+        La diferencia es práctica, no semántica. Un proveedor entrega lo que se le pide. Un partner discute si lo que se está pidiendo es lo correcto. Trabajamos así desde la primera conversación.
+      </p>
+    </div>
+  </div>
+
+  <div class="stance-grid">
+    <div class="stance-item">
+      <div class="pill">Postura · 01</div>
+      <h3 class="h-3">Pensamos antes de implementar.</h3>
+      <p class="body">
+        Cada proyecto empieza con una conversación de negocio, no con un kickoff técnico. Entendemos qué decisión está bloqueada, qué área la necesita, qué información existe y cuál no. Salimos con una recomendación clara: esto sí vale la pena, esto no, esto primero, esto después. Si lo que el cliente pidió originalmente no es lo que necesita, lo decimos.
+      </p>
+    </div>
+
+    <div class="stance-item">
+      <div class="pill">Postura · 02</div>
+      <h3 class="h-3">Traemos know-how, no manos.</h3>
+      <p class="body">
+        Después de años trabajando con datos en industrias tradicionales — aseguradoras, transporte, holdings — sabemos qué proyectos generan valor real y cuáles son cementerios de tiempo. Sabemos en qué orden construir, qué shortcuts no tomar, y qué decisiones de arquitectura te van a doler en dos años. Ese criterio acumulado es lo que el cliente está comprando, más que las horas de implementación.
+      </p>
+    </div>
+
+    <div class="stance-item">
+      <div class="pill">Postura · 03</div>
+      <h3 class="h-3">Construimos para que tu equipo tome el control.</h3>
+      <p class="body">
+        No vendemos dependencia. Documentamos el código, capacitamos al equipo interno, dejamos el repositorio en tu organización. Si querés que sigamos haciendo mantención, ofrecemos retainer. Si preferís tomarlo internamente después de la implementación, lo dejamos preparado para eso. Tu autonomía es parte del entregable.
+      </p>
+    </div>
+  </div>
+
+  <div class="stance-footer">
+    Nuestro framework interno (<strong>wizdomdata-framework</strong>) es la suma de todos los proyectos que hemos visto fallar y los que vimos funcionar. Es el motivo por el que nuestros entregables no se reinventan cada vez.
+  </div>
+</section>
+
+<!-- ============ 04 · CAPACIDADES ============ -->
+<section class="sec" id="capacidades">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">04</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Capacidades</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        Cuando la decisión está clara,<br>
+        sabemos <span class="accent">qué construir</span>.
+      </h2>
+      <p class="body-l">
+        Diseñamos, construimos y operamos la capa de datos completa — desde el pipeline que ingesta tus sistemas hasta el modelo que predice qué cliente vas a perder el próximo mes. Trabajamos con el stack moderno y con la IA aplicada al negocio real, no a la demo.
+      </p>
+    </div>
+  </div>
+
+  <div class="caps-grid">
+    <div class="cap-card">
+      <div class="num">01 · Data Engineering</div>
+      <h3 class="h-3">Pipelines, warehouses, integraciones en tiempo real.</h3>
+      <p class="body">
+        Centralizamos la información dispersa entre sistemas operacionales, planillas y APIs externas. Diseñamos la base sobre la que después corre todo lo demás — analítica, modelos, automatizaciones.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>dbt · BigQuery · Databricks · AWS · Azure · GCP · SQL Server · Snowflake
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="num">02 · Business Intelligence</div>
+      <h3 class="h-3">Dashboards que tu equipo abre todos los días.</h3>
+      <p class="body">
+        Reportes ejecutivos para directorio, vistas operativas para mandos medios, métricas correctas para cada rol. Pocas vistas, bien pensadas, sobre datos que cuadran.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>Power BI · Tableau · Looker · Metabase
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="num">03 · AI &amp; Machine Learning</div>
+      <h3 class="h-3">Modelos predictivos y agentes con LLMs.</h3>
+      <p class="body">
+        Desde un modelo de churn clásico hasta un chatbot que responde preguntas de negocio sobre tu data warehouse. Asistentes conversacionales, automatización con IA, modelos en producción.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>Python · scikit-learn · MLflow · OpenAI · Anthropic · LangChain · Vertex AI
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="num">04 · Automatización &amp; Data Products</div>
+      <h3 class="h-3">Cuando el proceso no existe, lo construimos.</h3>
+      <p class="body">
+        Si una tarea se hace cinco veces al mes, la automatizamos. Si tu equipo necesita una herramienta interna que no existe en el mercado, la diseñamos a medida. Apps internas, integraciones, productos de datos.
+      </p>
+      <div class="stack-line">
+        <span class="label">Stack</span>Python · Streamlit · n8n · APIs custom · Cloud Functions
+      </div>
+    </div>
+  </div>
+
+  <div class="caps-footer">
+    No vendemos paquetes cerrados. Cada proyecto se diseña según lo que el negocio necesita resolver — y dónde está hoy en su madurez de datos.
+  </div>
+</section>
+
+<!-- ============ 05 · EQUIPO ============ -->
+<section class="sec" id="equipo">
+  <div class="sec-head">
+    <div class="left">
+      <div class="eyebrow">
+        <span class="num">05</span>
+        <span class="divider">
+          <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+        </span>
+        <span>Equipo</span>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="h-section">
+        Dos ingenieros.<br>
+        Sin <span class="accent">intermediarios</span>.
+      </h2>
+      <p class="body-l">
+        WizdomData es una consultora boutique fundada en 2026. No tenemos un equipo de ventas que te pasa a un equipo de delivery. Quienes te venden el proyecto son quienes lo construyen.
+      </p>
+    </div>
+  </div>
+
+  <div class="team-grid">
+    <div class="person">
+      <div class="role">Co-fundador · Data Engineering &amp; Analytics</div>
+      <div class="name-line">Juan Ignacio<br>Navarrete</div>
+      <p class="bio">
+        Ingeniero Civil Industrial UTFSM. Diplomado en Analytics, PUC. AWS Certified Data Engineer. Siete años trabajando con datos en industrias tradicionales — cuatro de ellos como freelance para una aseguradora chilena, donde el BI que dejé sigue operando.
+      </p>
+      <div class="stack">
+        <span class="label">Stack</span>dbt · BigQuery · SQL Server · Power BI · Python · AWS
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="role">Co-fundador · Data Science</div>
+      <div class="name-line">Stefano<br>Schiappacasse</div>
+      <p class="bio">
+        Ingeniero Civil Industrial UTFSM. Magíster en Data Science, Universidad de Chile (distinción máxima). Trabaja en producción con modelos predictivos a escala industrial.
+      </p>
+      <div class="stack">
+        <span class="label">Stack</span>Python · Databricks · scikit-learn · MLflow · PySpark
+      </div>
+    </div>
+  </div>
+
+  <div class="team-footer">
+    Si tu proyecto necesita más manos, traemos especialistas de nuestra red. Pero el diseño y la responsabilidad técnica nunca se delegan.
+  </div>
+</section>
+
+<!-- ============ 06 · CIERRE / CONTACTO ============ -->
+<section class="closing" id="contacto">
+  <div class="closing-head">
+    <div class="eyebrow">
+      <span class="num">06</span>
+      <span class="divider">
+        <svg viewBox="0 0 292 290" class="mk-bone mk-rombo"><use href="#mark"/></svg>
+      </span>
+      <span>Hablemos</span>
+    </div>
+    <h2 class="h-section">
+      ¿Tu negocio toma decisiones<br>
+      con la información<br>
+      que <span class="accent">necesita</span>?
+    </h2>
+    <p class="body-l">
+      Si la respuesta es "no estoy seguro" — esa es la primera conversación que vale la pena tener. No te vamos a vender un proyecto en la primera reunión. Te vamos a ayudar a entender si tenés un problema de datos, un problema de proceso, o un problema de decisión. Los tres se resuelven distinto.
+    </p>
+  </div>
+
+  <div class="closing-cta-block">
+    <div class="cta-primary-card">
+      <div class="pill">Tenés un proyecto en mente</div>
+      <h3 class="h-3">Conversemos un proyecto.</h3>
+      <p class="body">
+        Contanos qué problema querés resolver, en qué industria estás, y qué intentaron antes. Respondemos en menos de 48 horas hábiles con un primer plan de discovery.
+      </p>
+      <a href="mailto:hola@wizdomdata.cl" class="btn btn-primary">
+        Escribir a hola@wizdomdata.cl
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="cta-secondary-card">
+      <div class="pill">Todavía no sabés si tenés un proyecto</div>
+      <h3 class="h-3">Diagnóstico de madurez analítica.</h3>
+      <p class="body">
+        Una hora de conversación, sin costo. Te ayudamos a entender en qué etapa está tu organización y qué proyectos generarían más valor primero. Si no hay un proyecto que tenga sentido, te lo decimos.
+      </p>
+      <a href="mailto:hola@wizdomdata.cl?subject=Diagnóstico%20madurez%20analítica" class="btn btn-secondary">
+        Solicitar diagnóstico
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="closing-meta">
+    <a href="mailto:hola@wizdomdata.cl">hola@wizdomdata.cl</a>
+    <span class="sep">·</span>
+    <span>respondemos en menos de 48 horas hábiles</span>
+    <span class="sep">·</span>
+    <span>Chile · operaciones remotas</span>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-mark">
+        <svg class="mark mk-bone mk-rombo" viewBox="0 0 292 290"><use href="#mark"/></svg>
+        <span class="wm"><em>Wizdom</em><span>Data</span></span>
+      </div>
+      <p style="color:var(--bone-3);font-size:12px;line-height:1.7;letter-spacing:0.04em;font-family:var(--font-mono);">
+        Partner analítico para<br>
+        empresas modernas.<br>
+        Chile · operaciones remotas
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h5>Contacto</h5>
+      <a href="mailto:hola@wizdomdata.cl">hola@wizdomdata.cl</a>
+      <a href="#">linkedin.com/company/wizdomdata</a>
+    </div>
+
+    <div class="footer-col">
+      <h5>Sitio</h5>
+      <a href="#porque">Por qué existimos</a>
+      <a href="#impacto">Por qué importa</a>
+      <a href="#postura">Cómo trabajamos</a>
+      <a href="#capacidades">Capacidades</a>
+      <a href="#equipo">Equipo</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 WizdomData SpA</span>
+    <span>Edición 02 · v1.0</span>
+  </div>
+</footer>
+
+</body>
+</html>

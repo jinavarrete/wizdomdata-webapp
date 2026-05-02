@@ -1,76 +1,277 @@
+@import "../brand/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* ============================================================
+   Base
+   ============================================================ */
 
-* {
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #0B1220;
-  color: #ffffff;
+  background-color: var(--tinta);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   overflow-x: hidden;
 }
 
-/* Grid pattern background */
-.grid-pattern {
-  background-image:
-    linear-gradient(rgba(0, 196, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 196, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+
+::-webkit-scrollbar        { width: 8px; }
+::-webkit-scrollbar-track  { background: var(--tinta); }
+::-webkit-scrollbar-thumb  { background: var(--tinta-2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ambar); }
+
+/* ============================================================
+   Typography utilities
+   ============================================================ */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--ambar);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Glow effect */
-.glow {
-  box-shadow: 0 0 20px rgba(0, 196, 255, 0.3);
+.eyebrow .num {
+  color: var(--bone-3);
 }
 
-.glow-hover:hover {
-  box-shadow: 0 0 30px rgba(0, 196, 255, 0.5);
-  transition: box-shadow 0.3s ease;
+.h-display {
+  font-family: var(--font-body);
+  font-weight: var(--fw-display);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--bone);
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #00C4FF 0%, #0099CC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.h-section {
+  font-family: var(--font-body);
+  font-weight: var(--fw-display);
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-h1);
+  color: var(--bone);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+.h-mid {
+  font-family: var(--font-body);
+  font-weight: var(--fw-display);
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.08;
+  letter-spacing: var(--tracking-h2);
+  color: var(--bone);
 }
 
-::-webkit-scrollbar-track {
-  background: #0B1220;
+.h-3 {
+  font-family: var(--font-body);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-h3);
+  color: var(--bone);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #00C4FF;
-  border-radius: 5px;
+.body-l {
+  font-size: var(--fs-body-l);
+  line-height: var(--lh-body);
+  color: var(--bone-3);
+  text-wrap: pretty;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #0099CC;
+.body {
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  color: var(--bone-3);
 }
 
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
+.meta-mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--tracking-mono);
+  color: var(--bone-3);
 }
 
-/* Button base styles */
+.accent {
+  color: var(--ambar);
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* ============================================================
+   Mark / Logo
+   ============================================================ */
+
+.mark {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.mk-bone path:not([data-rombo]) { fill: var(--bone); }
+.mk-tinta path:not([data-rombo]) { fill: var(--tinta); }
+.mk-rombo path[data-rombo] { fill: var(--ambar); }
+
+.wm {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.wm em { font-style: normal; color: var(--bone); }
+.wm span { color: var(--bone-3); }
+
+/* Rombo divider between inline items */
+.divider {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+}
+
+.divider svg { width: 10px; height: 10px; }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--t-base);
+}
+
 .btn-primary {
-  @apply bg-gradient-to-r from-primary to-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:scale-105;
+  background: var(--ambar);
+  color: var(--tinta);
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  background: var(--bone);
+  color: var(--tinta);
 }
 
 .btn-secondary {
-  @apply border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300;
+  background: transparent;
+  color: var(--bone);
+  border-color: var(--rule-strong);
+}
+
+.btn-secondary:hover {
+  border-color: var(--bone);
+}
+
+.btn-arrow {
+  transition: transform var(--t-base);
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
+.ui-card {
+  background: var(--bone-light);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--sp-8);
+  transition: all var(--t-base);
+}
+
+.ui-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+/* Section base */
+.sec {
+  padding: 120px var(--pad-x);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-top: 1px solid var(--rule);
+}
+
+/* Section header: 2-col — sticky eyebrow left, title+body right */
+.sec-head {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-bottom: 80px;
+}
+
+.sec-head .left {
+  position: sticky;
+  top: 100px;
+}
+
+.sec-head .right {
+  max-width: 720px;
+}
+
+.sec-head .right .h-section {
+  margin-bottom: 24px;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 960px) {
+  .sec-head {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .sec-head .left {
+    position: static;
+  }
 }

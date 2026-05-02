@@ -9,37 +9,62 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#00C4FF",
-        dark: "#0B1220",
-        "dark-secondary": "#0E1B2C",
-        "dark-tertiary": "#1A2332",
+        tinta:      "var(--tinta)",
+        "tinta-2":  "var(--tinta-2)",
+        bone:       "var(--bone)",
+        "bone-light": "var(--bone-light)",
+        "bone-3":   "var(--bone-3)",
+        ambar:      "var(--ambar)",
+        mute:       "var(--mute)",
+        rule:       "var(--rule)",
+        "rule-strong": "var(--rule-strong)",
+        bg:         "var(--bg)",
+        "bg-elev":  "var(--bg-elev)",
+        fg:         "var(--fg)",
+        "fg-soft":  "var(--fg-soft)",
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "Menlo", "monospace"],
       },
-      animation: {
-        "fade-in": "fadeIn 0.6s ease-out",
-        "slide-up": "slideUp 0.6s ease-out",
-        "slide-in-left": "slideInLeft 0.6s ease-out",
-        "slide-in-right": "slideInRight 0.6s ease-out",
+      borderRadius: {
+        DEFAULT: "2px",
+        none: "0px",
       },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        slideUp: {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-        slideInLeft: {
-          "0%": { transform: "translateX(-20px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
-        slideInRight: {
-          "0%": { transform: "translateX(20px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
+      maxWidth: {
+        site: "1280px",
+      },
+      fontSize: {
+        display: "var(--fs-display)",
+        h1:      "56px",
+        h2:      "40px",
+        h3:      "22px",
+        h4:      "18px",
+        "body-l": "17px",
+        body:    "15px",
+        meta:    "11px",
+      },
+      lineHeight: {
+        display: "0.98",
+        heading: "1.1",
+        body:    "1.6",
+        tight:   "1.25",
+      },
+      letterSpacing: {
+        display:  "-0.035em",
+        h1:       "-0.025em",
+        h2:       "-0.02em",
+        h3:       "-0.015em",
+        eyebrow:  "0.16em",
+        mono:     "0.06em",
+      },
+      boxShadow: {
+        "card-hover": "0 12px 28px -16px rgba(12, 14, 18, 0.18)",
+      },
+      transitionDuration: {
+        fast: "150ms",
+        base: "200ms",
+        slow: "300ms",
       },
     },
   },

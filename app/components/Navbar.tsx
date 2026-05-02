@@ -1,99 +1,167 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 
+const navLinks = [
+  { label: "por qué",         href: "#porque" },
+  { label: "impacto",         href: "#impacto" },
+  { label: "cómo trabajamos", href: "#postura" },
+  { label: "capacidades",     href: "#capacidades" },
+  { label: "equipo",          href: "#equipo" },
+];
+
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const menuItems = [
-    { name: "Servicios", href: "#servicios" },
-    { name: "Metodología", href: "#metodologia" },
-    { name: "Casos de Éxito", href: "#casos" },
-    { name: "Equipo", href: "#equipo" },
-    { name: "Contacto", href: "#contacto" },
-  ];
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-dark/95 backdrop-blur-md shadow-lg shadow-primary/10"
-          : "bg-transparent"
-      }`}
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        background: "rgba(12, 14, 18, 0.85)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        borderBottom: "1px solid var(--rule)",
+      }}
     >
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="text-2xl font-bold">
-              <span className="text-white">Wizdom</span>
-              <span className="text-primary">Data</span>
-            </div>
-          </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {menuItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-gray-300 hover:text-primary transition-colors duration-200 font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
-            <a
-              href="#contacto"
-              className="btn-primary text-sm"
-            >
-              Agenda una reunión
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white hover:text-primary transition-colors"
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "20px var(--pad-x)",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        {/* Logo */}
+        <Link
+          href="/"
+          aria-label="WizdomData — ir al inicio"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            textDecoration: "none",
+            color: "var(--bone)",
+          }}
+        >
+          <svg
+            className="mark mk-bone mk-rombo"
+            viewBox="0 0 292 290"
+            width={28}
+            height={28}
+            aria-hidden="true"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+            <use href="#mark" />
+          </svg>
+          <span className="wm" style={{ fontSize: 18 }}>
+            <em>Wizdom</em><span>Data</span>
+          </span>
+        </Link>
+
+        {/* Desktop links */}
+        <div
+          className="hidden md:flex"
+          style={{ alignItems: "center", gap: 32 }}
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                letterSpacing: "0.02em",
+                color: "var(--bone-3)",
+                textDecoration: "none",
+                transition: "color var(--t-base)",
+                textTransform: "lowercase",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--bone)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--bone-3)")}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#contacto"
+            className="btn btn-primary"
+            style={{ padding: "10px 18px", fontSize: 13 }}
+          >
+            Conversemos
+          </a>
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden py-4 space-y-4 animate-slide-up">
-            {menuItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="block text-gray-300 hover:text-primary transition-colors duration-200 py-2 font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
-            <a
-              href="#contacto"
-              onClick={() => setIsOpen(false)}
-              className="block btn-primary text-center text-sm mt-4"
-            >
-              Agenda una reunión
-            </a>
-          </div>
-        )}
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden"
+          onClick={() => setMobileOpen((o) => !o)}
+          aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "var(--bone)",
+            padding: 4,
+          }}
+        >
+          <svg width={22} height={22} viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            {mobileOpen ? (
+              <>
+                <line x1="3" y1="3" x2="19" y2="19" stroke="currentColor" strokeWidth={1.5} />
+                <line x1="19" y1="3" x2="3" y2="19" stroke="currentColor" strokeWidth={1.5} />
+              </>
+            ) : (
+              <>
+                <line x1="3" y1="6"  x2="19" y2="6"  stroke="currentColor" strokeWidth={1.5} />
+                <line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" strokeWidth={1.5} />
+                <line x1="3" y1="16" x2="19" y2="16" stroke="currentColor" strokeWidth={1.5} />
+              </>
+            )}
+          </svg>
+        </button>
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div
+          style={{
+            borderTop: "1px solid var(--rule)",
+            padding: "24px var(--pad-x) 32px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+          }}
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 13,
+                letterSpacing: "0.02em",
+                color: "var(--bone-3)",
+                textDecoration: "none",
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#contacto"
+            onClick={() => setMobileOpen(false)}
+            className="btn btn-primary"
+            style={{ alignSelf: "flex-start", padding: "10px 18px", fontSize: 13 }}
+          >
+            Conversemos
+          </a>
+        </div>
+      )}
     </nav>
   );
 };

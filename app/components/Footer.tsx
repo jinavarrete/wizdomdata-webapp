@@ -1,99 +1,183 @@
 "use client";
 
-import { Linkedin, Github, Mail, MapPin } from "lucide-react";
-
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-dark-tertiary border-t border-gray-800">
-      <div className="container mx-auto px-6 lg:px-12 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="text-2xl font-bold mb-4">
-              <span className="text-white">Wizdom</span>
-              <span className="text-primary">Data</span>
+    <footer style={{ borderTop: "1px solid var(--rule)" }}>
+      <div
+        style={{
+          padding: "56px var(--pad-x) 40px",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gap: 60,
+            alignItems: "start",
+          }}
+          className="footer-inner"
+        >
+          {/* Col 1 — brand */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+              <svg
+                className="mark mk-bone mk-rombo"
+                viewBox="0 0 292 290"
+                width={24}
+                height={24}
+                aria-hidden="true"
+              >
+                <use href="#mark" />
+              </svg>
+              <span className="wm" style={{ fontSize: 16 }}>
+                <em>Wizdom</em><span>Data</span>
+              </span>
             </div>
-            <p className="text-gray-400 mb-4 max-w-md">
-              Transformamos datos en decisiones inteligentes. Aceleramos la toma de decisiones mediante soluciones de datos escalables y confiables.
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                color: "var(--bone-3)",
+                lineHeight: 1.7,
+                letterSpacing: "0.04em",
+              }}
+            >
+              Partner analítico para<br />
+              empresas modernas.<br />
+              Chile · operaciones remotas
             </p>
-            <div className="flex space-x-4">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-primary transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={24} />
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-primary transition-colors"
-                aria-label="GitHub"
-              >
-                <Github size={24} />
-              </a>
-              <a
-                href="mailto:contacto@wizdomdata.com"
-                className="text-gray-400 hover:text-primary transition-colors"
-                aria-label="Email"
-              >
-                <Mail size={24} />
-              </a>
-            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Col 2 — contact */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Enlaces Rápidos</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#servicios" className="text-gray-400 hover:text-primary transition-colors">
-                  Servicios
-                </a>
-              </li>
-              <li>
-                <a href="#metodologia" className="text-gray-400 hover:text-primary transition-colors">
-                  Metodología
-                </a>
-              </li>
-              <li>
-                <a href="#casos" className="text-gray-400 hover:text-primary transition-colors">
-                  Casos de Éxito
-                </a>
-              </li>
-              <li>
-                <a href="#equipo" className="text-gray-400 hover:text-primary transition-colors">
-                  Equipo
-                </a>
-              </li>
-            </ul>
+            <h5
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                color: "var(--bone-3)",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                marginBottom: 18,
+                fontWeight: 400,
+              }}
+            >
+              Contacto
+            </h5>
+            <a
+              href="mailto:contacto@wizdomdata.com"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                color: "var(--bone)",
+                textDecoration: "none",
+                lineHeight: 1.8,
+                letterSpacing: "0.02em",
+                display: "block",
+                transition: "color var(--t-base)",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ambar)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--bone)")}
+            >
+              contacto@wizdomdata.com
+            </a>
+            <a
+              href="https://linkedin.com/company/wizdomdata"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                color: "var(--bone)",
+                textDecoration: "none",
+                lineHeight: 1.8,
+                letterSpacing: "0.02em",
+                display: "block",
+                transition: "color var(--t-base)",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ambar)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--bone)")}
+            >
+              linkedin.com/company/wizdomdata
+            </a>
           </div>
 
-          {/* Contact */}
+          {/* Col 3 — site links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Contacto</h3>
-            <ul className="space-y-2">
-              <li className="flex items-start space-x-2 text-gray-400">
-                <Mail size={20} className="mt-1 flex-shrink-0" />
-                <span>contacto@wizdomdata.com</span>
-              </li>
-              <li className="flex items-start space-x-2 text-gray-400">
-                <MapPin size={20} className="mt-1 flex-shrink-0" />
-                <span>Santiago, Chile</span>
-              </li>
-            </ul>
+            <h5
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                color: "var(--bone-3)",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                marginBottom: 18,
+                fontWeight: 400,
+              }}
+            >
+              Sitio
+            </h5>
+            {[
+              { label: "Por qué existimos", href: "#porque" },
+              { label: "Por qué importa",   href: "#impacto" },
+              { label: "Cómo trabajamos",   href: "#postura" },
+              { label: "Capacidades",        href: "#capacidades" },
+              { label: "Equipo",             href: "#equipo" },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 12,
+                  color: "var(--bone)",
+                  textDecoration: "none",
+                  lineHeight: 1.8,
+                  letterSpacing: "0.02em",
+                  display: "block",
+                  transition: "color var(--t-base)",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ambar)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--bone)")}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-          <p>&copy; {currentYear} WizdomData. Todos los derechos reservados.</p>
+        {/* Bottom bar */}
+        <div
+          style={{
+            marginTop: 56,
+            paddingTop: 24,
+            borderTop: "1px solid var(--rule)",
+            display: "flex",
+            justifyContent: "space-between",
+            fontFamily: "var(--font-mono)",
+            fontSize: 10.5,
+            color: "var(--mute)",
+            letterSpacing: "0.06em",
+            flexWrap: "wrap",
+            gap: 8,
+          }}
+        >
+          <span>© {year} WizdomData SpA</span>
+          <span>Edición 02 · v1.0</span>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 960px) {
+          .footer-inner {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 };

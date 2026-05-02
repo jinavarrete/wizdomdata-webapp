@@ -1,26 +1,38 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import MarkSprite from "./components/MarkSprite";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+  weight: ["400", "500", "600"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+  weight: ["400", "500"],
+});
 
 export const metadata: Metadata = {
-  title: "WizdomData | Transformamos Datos en Decisiones Inteligentes",
+  title: "WizdomData · Partner analítico para empresas modernas",
   description:
-    "Consultora especializada en Data Analytics, Business Intelligence y Data Engineering. Aceleramos la toma de decisiones mediante soluciones de datos inteligentes y escalables.",
+    "Consultora de data analytics con base en Chile. Diseñamos, construimos y operamos la capa analítica que convierte datos en decisiones.",
   keywords: [
     "data analytics",
     "business intelligence",
     "data engineering",
-    "power bi",
-    "tableau",
-    "aws",
-    "data science",
-    "consultoria datos",
+    "consultora datos",
     "chile",
     "wizdomdata",
+    "dbt",
+    "bigquery",
+    "power bi",
   ],
   authors: [{ name: "WizdomData" }],
   creator: "WizdomData",
@@ -29,17 +41,11 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_CL",
-    url: "https://wizdomdata.com",
-    title: "WizdomData | Transformamos Datos en Decisiones Inteligentes",
+    url: "https://wizdomdata.cl",
+    title: "WizdomData · Partner analítico para empresas modernas",
     description:
-      "Consultora especializada en Data Analytics, Business Intelligence y Data Engineering.",
+      "Consultora de data analytics con base en Chile. Del dato a la decisión.",
     siteName: "WizdomData",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "WizdomData | Transformamos Datos en Decisiones Inteligentes",
-    description:
-      "Consultora especializada en Data Analytics, Business Intelligence y Data Engineering.",
   },
 };
 
@@ -49,11 +55,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="scroll-smooth">
+    <html lang="es" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={inter.className}>
+      <body>
+        <MarkSprite />
         <Navbar />
         <main>{children}</main>
         <Footer />
