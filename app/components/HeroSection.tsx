@@ -92,10 +92,8 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              WizdomData es el partner analítico que se sienta con tu equipo
-              antes de que se construya el primer dashboard — para definir qué
-              vale la pena medir, qué datos te dan ventaja, y qué proyectos sí
-              mueven el negocio.
+              WizdomData es el partner analítico que ayuda a tu equipo a
+              definir qué medir, qué construir, y qué decisiones priorizar.
             </motion.p>
 
             <motion.div

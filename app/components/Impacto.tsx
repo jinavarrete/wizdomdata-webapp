@@ -7,22 +7,22 @@ const cards = [
   {
     num: "01",
     claim: "Decisiones más rápidas, no más reportes.",
-    body: "El directorio deja de pedir el mismo reporte tres veces porque las cifras nunca cuadran. La operación deja de discutir definiciones en cada reunión. La velocidad operativa se compone — un mes de aceleración en cada decisión es un trimestre ganado al año.",
+    body: "El directorio deja de pedir el mismo dato tres veces porque las cifras nunca cuadran.",
   },
   {
     num: "02",
     claim: "Eficiencia donde antes había trabajo manual.",
-    body: "Las cinco horas semanales que tu analista pasa consolidando un Excel para el comité dejan de existir. Los procesos que se hacían a mano por excepción pasan a hacerse solos por defecto. El equipo deja de operar la planilla y empieza a operar el negocio.",
+    body: "Las cinco horas semanales que tu analista pasa en Excel dejan de existir.",
   },
   {
     num: "03",
     claim: "Ventaja antes que el resto.",
-    body: "Cuando tu competencia recién está pidiendo un dashboard de churn, vos ya tenés el modelo predictivo en producción. Cuando recién se preguntan qué clientes priorizar, vos ya tenés la segmentación operando. La curva de aprendizaje analítico se compone — y empezar antes vale más cada año.",
+    body: "Cuando tu competencia recién pide un dashboard de churn, vos ya tenés el modelo en producción.",
   },
   {
     num: "04",
     claim: "El directorio decide con la misma data que opera la línea.",
-    body: "La diferencia entre una empresa data-madura y una que no lo es no está en la herramienta de BI. Está en si la cifra que ve el gerente general es la misma que ve el supervisor de operaciones. Cuando esa alineación existe, el directorio decide rápido. Cuando no existe, decide tarde y mal.",
+    body: "Cuando esa alineación existe, las decisiones se toman rápido. Cuando no existe, tarde y mal.",
   },
 ];
 
@@ -58,18 +58,13 @@ const Impacto = () => {
                   <use href="#mark" />
                 </svg>
               </span>
-              <span>Por qué importa</span>
+              <span>Lo que cambia</span>
             </div>
           </div>
           <div className="right">
             <h2 className="h-section" style={{ marginBottom: 24 }}>
-              Lo que cambia cuando los datos<br />
-              llegan a la <span className="accent">decisión</span>.
+              Cuando los datos llegan a la <span className="accent">decisión</span>.
             </h2>
-            <p className="body-l">
-              Los efectos de una capa analítica bien construida no se miden en
-              dashboards entregados. Se miden en cómo opera el negocio.
-            </p>
           </div>
         </motion.div>
 

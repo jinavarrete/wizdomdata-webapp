@@ -7,13 +7,13 @@ const people = [
   {
     role: "Co-fundador · Data Engineering & Analytics",
     name: "Juan Ignacio\nNavarrete",
-    bio: "Ingeniero Civil Industrial UTFSM. Diplomado en Analytics, PUC. AWS Certified Data Engineer. Siete años trabajando con datos en industrias tradicionales — cuatro de ellos como freelance para una aseguradora chilena, donde el BI que dejé sigue operando.",
+    bio: "Ingeniero Civil Industrial UTFSM. AWS Certified Data Engineer. Siete años trabajando con datos en industrias tradicionales.",
     stack: "dbt · BigQuery · SQL Server · Power BI · Python · AWS",
   },
   {
     role: "Co-fundador · Data Science",
     name: "Stefano\nSchiappacasse",
-    bio: "Ingeniero Civil Industrial UTFSM. Magíster en Data Science, Universidad de Chile (distinción máxima). Trabaja en producción con modelos predictivos a escala industrial.",
+    bio: "Ingeniero Civil Industrial UTFSM. Magíster en Data Science, Universidad de Chile.",
     stack: "Python · Databricks · scikit-learn · MLflow · PySpark",
   },
 ];
@@ -58,11 +58,6 @@ const Team = () => {
               Dos ingenieros.<br />
               Sin <span className="accent">intermediarios</span>.
             </h2>
-            <p className="body-l">
-              WizdomData es una consultora boutique fundada en 2026. No tenemos
-              un equipo de ventas que te pasa a un equipo de delivery. Quienes te
-              venden el proyecto son quienes lo construyen.
-            </p>
           </div>
         </motion.div>
 
@@ -143,23 +138,6 @@ const Team = () => {
           ))}
         </div>
 
-        {/* Footer note */}
-        <motion.p
-          className="meta-mono"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.45 }}
-          style={{
-            marginTop: 56,
-            paddingTop: 24,
-            borderTop: "1px solid var(--rule)",
-            lineHeight: 1.7,
-            maxWidth: "70ch",
-          }}
-        >
-          Si tu proyecto necesita más manos, traemos especialistas de nuestra
-          red. Pero el diseño y la responsabilidad técnica nunca se delegan.
-        </motion.p>
       </div>
 
       <style>{`

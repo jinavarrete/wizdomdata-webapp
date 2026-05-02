@@ -7,17 +7,17 @@ const stances = [
   {
     pill: "Postura · 01",
     title: "Pensamos antes de implementar.",
-    body: "Cada proyecto empieza con una conversación de negocio, no con un kickoff técnico. Entendemos qué decisión está bloqueada, qué área la necesita, qué información existe y cuál no. Salimos con una recomendación clara: esto sí vale la pena, esto no, esto primero, esto después. Si lo que el cliente pidió originalmente no es lo que necesita, lo decimos.",
+    body: "Cada proyecto empieza con una conversación de negocio, no con un kickoff técnico. Si lo que pediste originalmente no es lo que necesitas, lo decimos.",
   },
   {
     pill: "Postura · 02",
     title: "Traemos know-how, no manos.",
-    body: "Después de años trabajando con datos en industrias tradicionales — aseguradoras, transporte, holdings — sabemos qué proyectos generan valor real y cuáles son cementerios de tiempo. Sabemos en qué orden construir, qué shortcuts no tomar, y qué decisiones de arquitectura te van a doler en dos años. Ese criterio acumulado es lo que el cliente está comprando, más que las horas de implementación.",
+    body: "Después de años en industrias tradicionales, sabemos qué proyectos generan valor real y cuáles son cementerios de tiempo. Ese criterio es lo que se compra.",
   },
   {
     pill: "Postura · 03",
     title: "Construimos para que tu equipo tome el control.",
-    body: "No vendemos dependencia. Documentamos el código, capacitamos al equipo interno, dejamos el repositorio en tu organización. Si querés que sigamos haciendo mantención, ofrecemos retainer. Si preferís tomarlo internamente después de la implementación, lo dejamos preparado para eso. Tu autonomía es parte del entregable.",
+    body: "Documentamos el código, capacitamos al equipo, dejamos el repositorio en tu organización. No vendemos dependencia.",
   },
 ];
 
@@ -58,13 +58,12 @@ const Postura = () => {
           </div>
           <div className="right">
             <h2 className="h-section" style={{ marginBottom: 24 }}>
-              Partner analítico,<br />
+              Partner,<br />
               no <span className="accent">proveedor</span>.
             </h2>
             <p className="body-l">
-              La diferencia es práctica, no semántica. Un proveedor entrega lo
-              que se le pide. Un partner discute si lo que se está pidiendo es lo
-              correcto. Trabajamos así desde la primera conversación.
+              Un proveedor entrega lo que se le pide. Un partner discute si lo
+              que se está pidiendo es lo correcto.
             </p>
           </div>
         </motion.div>
@@ -110,31 +109,6 @@ const Postura = () => {
           ))}
         </div>
 
-        {/* Footer callout */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          style={{
-            marginTop: 56,
-            padding: "18px 24px",
-            background: "rgba(232, 128, 12, 0.04)",
-            borderLeft: "2px solid var(--ambar)",
-            fontFamily: "var(--font-mono)",
-            fontSize: 12,
-            color: "var(--bone-3)",
-            lineHeight: 1.7,
-            letterSpacing: "0.04em",
-          }}
-        >
-          Nuestro framework interno (
-          <strong style={{ color: "var(--bone)", fontWeight: 500 }}>
-            wizdomdata-framework
-          </strong>
-          ) es la suma de todos los proyectos que hemos visto fallar y los que
-          vimos funcionar. Es el motivo por el que nuestros entregables no se
-          reinventan cada vez.
-        </motion.div>
       </div>
 
       <style>{`
