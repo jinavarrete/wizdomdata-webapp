@@ -37,17 +37,9 @@ const Contacto = () => {
             <span>Hablemos</span>
           </div>
           <h2 className="h-section" style={{ marginBottom: 28 }}>
-            ¿Tu negocio toma decisiones<br />
-            con la información<br />
+            ¿Tu negocio decide con la información<br />
             que <span className="accent">necesita</span>?
           </h2>
-          <p className="body-l">
-            Si la respuesta es "no estoy seguro" — esa es la primera conversación
-            que vale la pena tener. No te vamos a vender un proyecto en la primera
-            reunión. Te vamos a ayudar a entender si tenés un problema de datos, un
-            problema de proceso, o un problema de decisión. Los tres se resuelven
-            distinto.
-          </p>
         </motion.div>
 
         {/* CTA cards */}
@@ -90,15 +82,13 @@ const Contacto = () => {
               Conversemos un proyecto.
             </h3>
             <p className="body" style={{ marginBottom: 24 }}>
-              Contanos qué problema querés resolver, en qué industria estás, y
-              qué intentaron antes. Respondemos en menos de 48 horas hábiles con
-              un primer plan de discovery.
+              Contanos qué problema querés resolver. Respondemos en 48 horas.
             </p>
             <a
-              href="mailto:contacto@wizdomdata.com"
+              href="mailto:hola@wizdomdata.cl"
               className="btn btn-primary"
             >
-              Escribir a contacto@wizdomdata.com
+              Escribir a hola@wizdomdata.cl
               <span className="btn-arrow">→</span>
             </a>
           </div>
@@ -127,12 +117,10 @@ const Contacto = () => {
               Diagnóstico de madurez analítica.
             </h3>
             <p className="body" style={{ marginBottom: 24 }}>
-              Una hora de conversación, sin costo. Te ayudamos a entender en qué
-              etapa está tu organización y qué proyectos generarían más valor
-              primero. Si no hay un proyecto que tenga sentido, te lo decimos.
+              Una hora, sin costo. Si no hay proyecto, te lo decimos.
             </p>
             <a
-              href="mailto:contacto@wizdomdata.com?subject=Diagnóstico%20madurez%20analítica"
+              href="mailto:hola@wizdomdata.cl?subject=Diagnóstico%20madurez%20analítica"
               className="btn btn-secondary"
             >
               Solicitar diagnóstico
@@ -160,7 +148,7 @@ const Contacto = () => {
           }}
         >
           <a
-            href="mailto:contacto@wizdomdata.com"
+            href="mailto:hola@wizdomdata.cl"
             style={{
               color: "var(--ambar)",
               textDecoration: "none",
@@ -170,7 +158,7 @@ const Contacto = () => {
             onMouseEnter={(e) => (e.currentTarget.style.borderBottomColor = "var(--ambar)")}
             onMouseLeave={(e) => (e.currentTarget.style.borderBottomColor = "transparent")}
           >
-            contacto@wizdomdata.com
+            hola@wizdomdata.cl
           </a>
           <span style={{ color: "var(--mute)" }}>·</span>
           <span>respondemos en menos de 48 horas hábiles</span>

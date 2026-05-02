@@ -7,25 +7,25 @@ const caps = [
   {
     num: "01 · Data Engineering",
     title: "Pipelines, warehouses, integraciones en tiempo real.",
-    body: "Centralizamos la información dispersa entre sistemas operacionales, planillas y APIs externas. Diseñamos la base sobre la que después corre todo lo demás — analítica, modelos, automatizaciones.",
+    body: "Pipelines, warehouses, integraciones en tiempo real.",
     stack: "dbt · BigQuery · Databricks · AWS · Azure · GCP · SQL Server · Snowflake",
   },
   {
     num: "02 · Business Intelligence",
     title: "Dashboards que tu equipo abre todos los días.",
-    body: "Reportes ejecutivos para directorio, vistas operativas para mandos medios, métricas correctas para cada rol. Pocas vistas, bien pensadas, sobre datos que cuadran.",
+    body: "Dashboards que tu equipo abre todos los días.",
     stack: "Power BI · Tableau · Looker · Metabase",
   },
   {
     num: "03 · AI & Machine Learning",
     title: "Modelos predictivos y agentes con LLMs.",
-    body: "Desde un modelo de churn clásico hasta un chatbot que responde preguntas de negocio sobre tu data warehouse. Asistentes conversacionales, automatización con IA, modelos en producción.",
+    body: "Modelos predictivos, agentes con LLMs, automatización con IA.",
     stack: "Python · scikit-learn · MLflow · OpenAI · Anthropic · LangChain · Vertex AI",
   },
   {
     num: "04 · Automatización & Data Products",
     title: "Cuando el proceso no existe, lo construimos.",
-    body: "Si una tarea se hace cinco veces al mes, la automatizamos. Si tu equipo necesita una herramienta interna que no existe en el mercado, la diseñamos a medida. Apps internas, integraciones, productos de datos.",
+    body: "Apps internas, integraciones, herramientas a medida.",
     stack: "Python · Streamlit · n8n · APIs custom · Cloud Functions",
   },
 ];
@@ -70,12 +70,6 @@ const Capacidades = () => {
               Cuando la decisión está clara,<br />
               sabemos <span className="accent">qué construir</span>.
             </h2>
-            <p className="body-l">
-              Diseñamos, construimos y operamos la capa de datos completa — desde
-              el pipeline que ingesta tus sistemas hasta el modelo que predice qué
-              cliente vas a perder el próximo mes. Trabajamos con el stack moderno
-              y con la IA aplicada al negocio real, no a la demo.
-            </p>
           </div>
         </motion.div>
 
@@ -141,23 +135,6 @@ const Capacidades = () => {
           ))}
         </div>
 
-        {/* Footer note */}
-        <motion.p
-          className="meta-mono"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          style={{
-            marginTop: 48,
-            paddingTop: 32,
-            borderTop: "1px solid var(--rule)",
-            lineHeight: 1.7,
-            maxWidth: "70ch",
-          }}
-        >
-          No vendemos paquetes cerrados. Cada proyecto se diseña según lo que el
-          negocio necesita resolver — y dónde está hoy en su madurez de datos.
-        </motion.p>
       </div>
 
       <style>{`
