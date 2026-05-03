@@ -11,7 +11,7 @@ const Contacto = () => {
     <section
       id="contacto"
       ref={ref}
-      style={{ borderTop: "1px solid var(--rule)" }}
+      style={{ background: "var(--surface-2)", borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
         style={{
@@ -28,7 +28,7 @@ const Contacto = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="eyebrow" style={{ marginBottom: 32 }}>
-            <span className="num">06</span>
+            <span className="num">05</span>
             <span className="divider">
               <svg viewBox="0 0 292 290" className="mk-bone mk-rombo" aria-hidden="true">
                 <use href="#mark" />
@@ -61,8 +61,8 @@ const Contacto = () => {
           <div
             style={{
               padding: 36,
-              background: "rgba(232, 128, 12, 0.05)",
-              border: "1px solid rgba(232, 128, 12, 0.2)",
+              background: "var(--surface-3)",
+              border: "1px solid var(--ambar)",
               borderRadius: "var(--radius)",
             }}
           >
@@ -97,7 +97,8 @@ const Contacto = () => {
           <div
             style={{
               padding: 36,
-              border: "1px solid var(--rule-strong)",
+              background: "var(--surface-3)",
+              border: "1px solid var(--border-default)",
               borderRadius: "var(--radius)",
             }}
           >

@@ -4,7 +4,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer style={{ borderTop: "1px solid var(--rule)" }}>
+    <footer style={{ background: "var(--surface-1)", borderTop: "1px solid var(--border-subtle)" }}>
       <div
         style={{
           padding: "56px var(--pad-x) 40px",
@@ -154,7 +154,7 @@ const Footer = () => {
           style={{
             marginTop: 56,
             paddingTop: 24,
-            borderTop: "1px solid var(--rule)",
+            borderTop: "1px solid var(--border-subtle)",
             display: "flex",
             justifyContent: "space-between",
             fontFamily: "var(--font-mono)",

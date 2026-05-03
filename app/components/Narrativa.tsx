@@ -13,7 +13,7 @@ const Narrativa = () => {
       ref={ref}
       style={{
         padding: "140px var(--pad-x) 120px",
-        borderTop: "1px solid var(--rule)",
+        borderTop: "1px solid var(--border-subtle)",
       }}
     >
       <div

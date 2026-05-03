@@ -38,7 +38,7 @@ const Capacidades = () => {
     <section
       id="capacidades"
       ref={ref}
-      style={{ borderTop: "1px solid var(--rule)" }}
+      style={{ background: "var(--surface-2)", borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
         style={{
@@ -56,7 +56,7 @@ const Capacidades = () => {
         >
           <div className="left">
             <div className="eyebrow">
-              <span className="num">04</span>
+              <span className="num">03</span>
               <span className="divider">
                 <svg viewBox="0 0 292 290" className="mk-bone mk-rombo" aria-hidden="true">
                   <use href="#mark" />
@@ -78,8 +78,8 @@ const Capacidades = () => {
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            borderTop: "1px solid var(--rule)",
-            borderLeft: "1px solid var(--rule)",
+            borderTop: "1px solid var(--border-default)",
+            borderLeft: "1px solid var(--border-default)",
           }}
           className="caps-grid"
         >
@@ -91,15 +91,20 @@ const Capacidades = () => {
               transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
               style={{
                 padding: "48px 40px 56px",
-                borderRight: "1px solid var(--rule)",
-                borderBottom: "1px solid var(--rule)",
-                transition: "background var(--t-slow)",
+                background: "var(--surface-3)",
+                borderRight: "1px solid var(--border-default)",
+                borderBottom: "1px solid var(--border-default)",
+                transition: "background var(--t-base), border-color var(--t-base), transform var(--t-base)",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(232,227,214,0.02)";
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "var(--surface-4)";
+                el.style.transform = "translateY(-2px)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "transparent";
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "var(--surface-3)";
+                el.style.transform = "translateY(0)";
               }}
             >
               <div
@@ -119,11 +124,14 @@ const Capacidades = () => {
               </p>
               <div
                 style={{
-                  borderTop: "1px solid var(--rule)",
-                  paddingTop: 16,
+                  background: "var(--surface-1)",
+                  border: "1px solid var(--border-subtle)",
+                  borderRadius: "var(--radius)",
+                  padding: "8px 12px",
+                  marginTop: 8,
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "var(--bone-3)",
+                  color: "var(--text-tertiary)",
                   letterSpacing: "0.04em",
                   lineHeight: 1.5,
                 }}

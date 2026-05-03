@@ -34,7 +34,7 @@ const Impacto = () => {
     <section
       id="impacto"
       ref={ref}
-      style={{ borderTop: "1px solid var(--rule)" }}
+      style={{ background: "var(--surface-2)", borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
         style={{
@@ -52,7 +52,7 @@ const Impacto = () => {
         >
           <div className="left">
             <div className="eyebrow">
-              <span className="num">02</span>
+              <span className="num">01</span>
               <span className="divider">
                 <svg viewBox="0 0 292 290" className="mk-bone mk-rombo" aria-hidden="true">
                   <use href="#mark" />
@@ -73,8 +73,8 @@ const Impacto = () => {
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            borderTop: "1px solid var(--rule)",
-            borderLeft: "1px solid var(--rule)",
+            borderTop: "1px solid var(--border-default)",
+            borderLeft: "1px solid var(--border-default)",
           }}
           className="impact-grid"
         >
@@ -86,16 +86,23 @@ const Impacto = () => {
               transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
               style={{
                 padding: "56px 48px",
-                borderRight: "1px solid var(--rule)",
-                borderBottom: "1px solid var(--rule)",
-                transition: "background var(--t-slow)",
+                background: "var(--surface-3)",
+                borderRight: "1px solid var(--border-default)",
+                borderBottom: "1px solid var(--border-default)",
+                transition: "background var(--t-base), border-color var(--t-base), transform var(--t-base)",
                 position: "relative",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(232,227,214,0.02)";
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "var(--surface-4)";
+                el.style.borderColor = "var(--border-strong)";
+                el.style.transform = "translateY(-2px)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "transparent";
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "var(--surface-3)";
+                el.style.borderColor = "var(--border-default)";
+                el.style.transform = "translateY(0)";
               }}
             >
               <span

@@ -22,8 +22,8 @@ html {
 }
 
 body {
-  background-color: var(--tinta);
-  color: var(--bone);
+  background-color: var(--surface-0);
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
@@ -97,14 +97,14 @@ body {
 .body-l {
   font-size: var(--fs-body-l);
   line-height: var(--lh-body);
-  color: var(--bone-3);
+  color: var(--text-secondary);
   text-wrap: pretty;
 }
 
 .body {
   font-size: var(--fs-body);
   line-height: 1.65;
-  color: var(--bone-3);
+  color: var(--text-secondary);
 }
 
 .meta-mono {
@@ -209,16 +209,17 @@ body {
    ============================================================ */
 
 .ui-card {
-  background: var(--bone-light);
-  border: 1px solid var(--rule);
+  background: var(--surface-3);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius);
   padding: var(--sp-8);
-  transition: all var(--t-base);
+  transition: background var(--t-base), border-color var(--t-base), transform var(--t-base);
 }
 
 .ui-card:hover {
+  background: var(--surface-4);
+  border-color: var(--border-strong);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
 }
 
 /* ============================================================

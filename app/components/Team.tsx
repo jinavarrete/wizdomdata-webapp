@@ -26,7 +26,7 @@ const Team = () => {
     <section
       id="equipo"
       ref={ref}
-      style={{ borderTop: "1px solid var(--rule)" }}
+      style={{ borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
         style={{
@@ -44,7 +44,7 @@ const Team = () => {
         >
           <div className="left">
             <div className="eyebrow">
-              <span className="num">05</span>
+              <span className="num">04</span>
               <span className="divider">
                 <svg viewBox="0 0 292 290" className="mk-bone mk-rombo" aria-hidden="true">
                   <use href="#mark" />
@@ -78,8 +78,10 @@ const Team = () => {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.12 }}
               style={{
-                borderTop: "1px solid var(--rule-strong)",
-                paddingTop: 32,
+                background: "var(--surface-2)",
+                border: "1px solid var(--border-default)",
+                borderRadius: "var(--radius)",
+                padding: 32,
               }}
             >
               <div
@@ -121,14 +123,16 @@ const Team = () => {
               </p>
               <div
                 style={{
+                  background: "var(--surface-1)",
+                  border: "1px solid var(--border-subtle)",
+                  borderRadius: "var(--radius)",
+                  padding: "8px 12px",
+                  marginTop: 8,
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "var(--bone-3)",
+                  color: "var(--text-tertiary)",
                   letterSpacing: "0.04em",
                   lineHeight: 1.5,
-                  padding: "12px 0",
-                  borderTop: "1px solid var(--rule)",
-                  borderBottom: "1px solid var(--rule)",
                 }}
               >
                 <span style={{ color: "var(--ambar)", marginRight: 6 }}>Stack</span>

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "por qué",         href: "#porque" },
   { label: "impacto",         href: "#impacto" },
   { label: "cómo trabajamos", href: "#postura" },
   { label: "capacidades",     href: "#capacidades" },
@@ -20,10 +19,10 @@ const Navbar = () => {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        background: "rgba(12, 14, 18, 0.85)",
+        background: "rgba(21, 24, 30, 0.95)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        borderBottom: "1px solid var(--rule)",
+        borderBottom: "1px solid var(--border-subtle)",
       }}
     >
       <div

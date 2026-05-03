@@ -22,6 +22,23 @@ const config: Config = {
         "bg-elev":  "var(--bg-elev)",
         fg:         "var(--fg)",
         "fg-soft":  "var(--fg-soft)",
+        surface: {
+          0: "var(--surface-0)",
+          1: "var(--surface-1)",
+          2: "var(--surface-2)",
+          3: "var(--surface-3)",
+          4: "var(--surface-4)",
+        },
+        text: {
+          primary:   "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          tertiary:  "var(--text-tertiary)",
+        },
+        border: {
+          subtle:  "var(--border-subtle)",
+          DEFAULT: "var(--border-default)",
+          strong:  "var(--border-strong)",
+        },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],

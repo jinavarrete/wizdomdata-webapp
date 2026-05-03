@@ -29,7 +29,7 @@ const Postura = () => {
     <section
       id="postura"
       ref={ref}
-      style={{ borderTop: "1px solid var(--rule)" }}
+      style={{ borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
         style={{
@@ -47,7 +47,7 @@ const Postura = () => {
         >
           <div className="left">
             <div className="eyebrow">
-              <span className="num">03</span>
+              <span className="num">02</span>
               <span className="divider">
                 <svg viewBox="0 0 292 290" className="mk-bone mk-rombo" aria-hidden="true">
                   <use href="#mark" />
@@ -85,7 +85,7 @@ const Postura = () => {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
               style={{
-                borderTop: "1px solid var(--rule-strong)",
+                borderTop: "1px solid var(--border-subtle)",
                 paddingTop: 28,
               }}
             >

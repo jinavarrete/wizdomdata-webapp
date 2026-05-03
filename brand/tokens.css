@@ -16,6 +16,23 @@
   --bone-3:       #A8A498;
   --mute:         #6B6A60;
 
+  /* ---------- Elevation surfaces ---------- */
+  --surface-0: #0C0E12;   /* base — page background */
+  --surface-1: #15181E;   /* header, footer */
+  --surface-2: #1A1D24;   /* section containers with cards */
+  --surface-3: #1F2229;   /* individual cards */
+  --surface-4: #2A2D33;   /* hover, active states */
+
+  /* ---------- Text hierarchy ---------- */
+  --text-primary:   #E8E3D6;  /* H1-H3, CTAs */
+  --text-secondary: #C9C4B7;  /* body paragraphs */
+  --text-tertiary:  #A8A498;  /* meta, labels, captions */
+
+  /* ---------- Borders (replace shadows in dark mode) ---------- */
+  --border-subtle:  rgba(232, 227, 214, 0.06);  /* section dividers */
+  --border-default: rgba(232, 227, 214, 0.10);  /* cards at rest */
+  --border-strong:  rgba(232, 227, 214, 0.18);  /* hover, focus */
+
   /* ---------- Rules (dividers / borders) ---------- */
   /* On bone backgrounds */
   --rule-on-bone:        rgba(12, 14, 18, 0.12);
