@@ -1,0 +1,198 @@
+.section {
+  padding: 120px var(--pad-x) 120px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+}
+
+.head {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ambar);
+}
+
+/* Stage */
+.stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.4;
+  mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Nebula */
+.nebula {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Data bits */
+.bit {
+  position: absolute;
+  font-family: var(--font-mono);
+  color: var(--bone);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  will-change: transform, opacity;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Rombo */
+.romboWrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.romboWrap.visible {
+  opacity: 1;
+}
+
+.romboSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.romboShape {
+  fill: var(--ambar);
+  transform-origin: center;
+}
+
+.romboWrap.pulsing .romboShape {
+  animation: pulse 1.4s ease 0s 1;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(0.6); }
+  40%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.romboGlow {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at center, rgba(232, 128, 12, 0.15) 0%, transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+
+.romboWrap.visible .romboGlow {
+  opacity: 1;
+}
+
+/* Decision */
+.decision {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  text-align: center;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s;
+  pointer-events: none;
+}
+
+.decision.visible {
+  opacity: 1;
+}
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ambar);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.decisionText {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--bone);
+  max-width: 38ch;
+  margin: 0 auto;
+}
+
+.accent {
+  color: var(--ambar);
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* Footer */
+.foot {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--bone);
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+  opacity: 0.7;
+  transition: opacity 0.8s ease;
+}
+
+.foot.bright {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section {
+    padding: 80px 20px;
+  }
+  .stage {
+    aspect-ratio: 4 / 5;
+    max-width: 100%;
+  }
+  .romboWrap {
+    width: 60px;
+    height: 60px;
+  }
+  .decision {
+    bottom: 8%;
+  }
+  .decisionText {
+    font-size: 16px;
+  }
+}
