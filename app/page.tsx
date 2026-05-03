@@ -1,4 +1,5 @@
 import HeroSection from "./components/HeroSection";
+import Concept from "./components/Concept";
 import Narrativa from "./components/Narrativa";
 import Impacto from "./components/Impacto";
 import Postura from "./components/Postura";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <Concept />
       <Narrativa />
       <Impacto />
       <Postura />

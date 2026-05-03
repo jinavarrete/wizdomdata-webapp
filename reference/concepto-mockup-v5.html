@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WizdomData · El concepto v2 (nebulosa)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tinta: #0C0E12;
+    --tinta-2: #2A2D33;
+    --bone: #E8E3D6;
+    --bone-light: #F2EEE3;
+    --bone-3: #A8A498;
+    --ambar: #E8800C;
+    --rule: rgba(232, 227, 214, 0.12);
+    --rule-strong: rgba(232, 227, 214, 0.22);
+    --mute: #6E6A60;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --max-w: 1280px;
+    --pad-x: 64px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--tinta);
+    color: var(--bone);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Spacers */
+  .spacer-top, .spacer-bottom {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bone-3);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .spacer-top { border-bottom: 1px solid var(--rule); }
+  .spacer-bottom { border-top: 1px solid var(--rule); }
+  .spacer-top span, .spacer-bottom span { opacity: 0.4; }
+
+  /* ============ EL CONCEPTO ============ */
+  .concept {
+    padding: 120px var(--pad-x) 120px;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .concept-head {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ambar);
+  }
+
+  .concept-stage {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  /* Grid background sutil */
+  .concept-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.4;
+    mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ============ Nebulosa de datos ============ */
+  .nebula {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .data-bit {
+    position: absolute;
+    font-family: var(--font-mono);
+    color: var(--bone);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: opacity 0.8s ease;
+  }
+
+  .data-bit.visible { opacity: var(--target-opacity, 0.5); }
+  .data-bit.fading { opacity: 0 !important; transition: opacity 1.5s ease; }
+
+  /* ============ Rombo central ============ */
+  .rombo-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .rombo-wrap.visible { opacity: 1; }
+
+  .rombo-svg {
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+  }
+  .rombo-shape {
+    fill: var(--ambar);
+    transform-origin: center;
+  }
+  .rombo-wrap.pulsing .rombo-shape {
+    animation: pulse 1.4s ease 0s 1;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.6); }
+    40% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  /* Glow sutil del rombo cuando aparece */
+  .rombo-glow {
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle at center, rgba(232, 128, 12, 0.15) 0%, transparent 60%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+  }
+  .rombo-wrap.visible .rombo-glow { opacity: 1; }
+
+  /* ============ Decisión revelada ============ */
+  .decision-reveal {
+    position: absolute;
+    left: 50%;
+    bottom: 14%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 90%;
+    text-align: center;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s;
+    pointer-events: none;
+  }
+  .decision-reveal.visible { opacity: 1; }
+
+  .decision-reveal .pill {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ambar);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .decision-reveal .text {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--bone);
+    text-wrap: pretty;
+    max-width: 38ch;
+    margin: 0 auto;
+  }
+  .decision-reveal .text .accent {
+    color: var(--ambar);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* ============ Cierre tipográfico ============ */
+  .concept-foot {
+    margin-top: 48px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--bone);
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+    opacity: 0.7;
+    transition: opacity 0.8s ease;
+  }
+  .concept-foot.bright { opacity: 1; }
+
+  /* ============ Status indicator ============ */
+  .status {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--bone-3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(12, 14, 18, 0.85);
+    border: 1px solid var(--rule);
+    padding: 10px 14px;
+    border-radius: 2px;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  .status .phase { color: var(--ambar); }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 768px) {
+    :root { --pad-x: 24px; }
+    .concept { padding: 80px 20px; }
+    .concept-stage { aspect-ratio: 4 / 5; max-width: 100%; }
+    .rombo-wrap { width: 60px; height: 60px; }
+    .decision-reveal { bottom: 8%; }
+    .decision-reveal .text { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="spacer-top">
+  <span>↑ HERO ↑</span>
+</div>
+
+<!-- ============ SECCIÓN: EL CONCEPTO ============ -->
+<section class="concept" id="concepto">
+  <div class="concept-head">
+    <div class="eyebrow">El concepto</div>
+  </div>
+
+  <div class="concept-stage" id="stage">
+
+    <!-- Nebulosa de datos -->
+    <div class="nebula" id="nebula"></div>
+
+    <!-- Rombo central -->
+    <div class="rombo-wrap" id="romboWrap">
+      <div class="rombo-glow"></div>
+      <svg class="rombo-svg" viewBox="0 0 100 100">
+        <path class="rombo-shape" d="M50 12 L88 50 L50 88 L12 50 Z"/>
+      </svg>
+    </div>
+
+    <!-- Decisión revelada -->
+    <div class="decision-reveal" id="decisionReveal">
+      <span class="pill">Decisión</span>
+      <div class="text">
+        Priorizar retención en <span class="accent">segmento B</span>.<br>
+        Impacto estimado: <span class="accent">+12% revenue Q3</span>.
+      </div>
+    </div>
+  </div>
+
+  <div class="concept-foot" id="foot">
+    Eso es lo que hacemos. Encontrar la decisión en los datos que ya tienes.
+  </div>
+</section>
+
+<div class="spacer-bottom">
+  <span>↓ POR QUÉ EXISTIMOS ↓</span>
+</div>
+
+<div class="status" id="status">
+  <span>Estado: </span><span class="phase" id="statusPhase">esperando scroll</span>
+</div>
+
+<script>
+// ============================================================
+// EL CONCEPTO v2 — nebulosa + rombo
+// ============================================================
+
+// Pool unificado de datos (sin clasificación, sin aspa asignada)
+const DATA_POOL = [
+  'TXN-8847291', '$1.247.500', '2026-04-12', 'CLI-00234', 'login_at',
+  'SKU-44821', 'NPS:7.2', 'churn_risk:0.34', 'pred_revenue:$4.2M',
+  'cart_abandoned', 'policy_renewed', 'lead_time:14d', 'stock:23',
+  'RUT 78.451.293', 'Segmento B', 'page_view', 'click_event',
+  '$847.200', 'TXN-8847292', 'session_end', 'purchase_complete',
+  'sucursal:Las Condes', 'warehouse_3', 'pickup_44', 'ltv:$890',
+  'arpu:$45', 'risk_score:medium', 'forecast:Q3+12%', 'CLI-00235',
+  'NPS:8.2', 'Cohort:2024-Q1', 'app_open', 'PAY-441', '$345.890',
+  'SKU-44822', 'TXN-8847293', '$2.100.000', 'event_id:9982',
+  'churn:0.21', 'CLI-00236', 'open_rate:0.34', 'segment_A',
+  'revenue:$890K', 'SKU-44823', 'order_44291', 'fcst_demand:340',
+  'returns:12', 'inventory:847', 'CLI-00237', '$1.890.220',
+  'TXN-8847294', 'lead_time:21d', 'NPS:6.8', 'cohort:2025-Q2',
+  '2026-04-13', 'churn_risk:0.18', 'visit_count:7', 'order_44292'
+];
+
+const stage = document.getElementById('stage');
+const nebula = document.getElementById('nebula');
+const romboWrap = document.getElementById('romboWrap');
+const decisionReveal = document.getElementById('decisionReveal');
+const foot = document.getElementById('foot');
+const statusPhase = document.getElementById('statusPhase');
+
+let bits = [];
+let phase = 'idle';
+let spawnTimer = null;
+let cycleTimer = null;
+
+function setPhase(p) {
+  phase = p;
+  statusPhase.textContent = p;
+}
+
+// Genera posición en nebulosa: distribución radial irregular
+// Más densa en el área media, evitando el centro exacto (zona del rombo)
+function generateNebulaPosition() {
+  // Distribución radial: 25% a 95% del radio (centro vacío para el rombo)
+  const angle = Math.random() * Math.PI * 2;
+  const radiusPct = 22 + Math.random() * 28; // 22% a 50% del eje menor
+
+  // Conversión a porcentajes de stage (centro 50,50)
+  // Ajuste de aspect ratio para que la distribución se vea elíptica
+  const x = 50 + Math.cos(angle) * radiusPct * 1.5; // ensancha en X
+  const y = 50 + Math.sin(angle) * radiusPct;
+
+  return { x: Math.max(2, Math.min(98, x)), y: Math.max(4, Math.min(96, y)) };
+}
+
+// Genera un bit con propiedades aleatorias (tamaño, opacidad, drift)
+function spawnBit() {
+  const pos = generateNebulaPosition();
+  const text = DATA_POOL[Math.floor(Math.random() * DATA_POOL.length)];
+
+  const bit = document.createElement('div');
+  bit.className = 'data-bit';
+  bit.textContent = text;
+
+  // Variabilidad: tamaño + opacidad calibradas para mantener contraste AA
+  // Todos los bits quedan legibles (>4.5:1 sobre tinta)
+  const sizeVariant = Math.random();
+  let fontSize, opacity;
+  if (sizeVariant < 0.25) {
+    // Bits "lejanos" - chicos pero legibles
+    fontSize = 10;
+    opacity = 0.55;
+  } else if (sizeVariant < 0.80) {
+    // Bits estándar
+    fontSize = 12;
+    opacity = 0.7;
+  } else {
+    // Bits "cercanos" - más grandes y más visibles
+    fontSize = 14;
+    opacity = 0.9;
+  }
+
+  bit.style.fontSize = fontSize + 'px';
+  bit.style.setProperty('--target-opacity', opacity);
+  bit.style.left = pos.x + '%';
+  bit.style.top = pos.y + '%';
+  bit.style.transform = 'translate(-50%, -50%)';
+
+  // Drift sutil aleatorio (movimiento perpetuo)
+  const driftX = (Math.random() - 0.5) * 30; // -15px a +15px
+  const driftY = (Math.random() - 0.5) * 30;
+  const driftDuration = 8 + Math.random() * 6; // 8-14s
+  bit.style.transition = `transform ${driftDuration}s ease-in-out, opacity 0.8s ease`;
+
+  bit.dataset.startX = pos.x;
+  bit.dataset.startY = pos.y;
+  bit.dataset.driftX = driftX;
+  bit.dataset.driftY = driftY;
+
+  nebula.appendChild(bit);
+  bits.push(bit);
+
+  // Fade in y arrancar drift
+  requestAnimationFrame(() => {
+    bit.classList.add('visible');
+    bit.style.transform = `translate(calc(-50% + ${driftX}px), calc(-50% + ${driftY}px))`;
+  });
+
+  // Auto-despawn solo si seguimos en spawning
+  setTimeout(() => {
+    if (phase === 'spawning' && bit.parentNode) {
+      bit.classList.add('fading');
+      setTimeout(() => {
+        if (bit.parentNode) bit.parentNode.removeChild(bit);
+        bits = bits.filter(b => b !== bit);
+      }, 1500);
+    }
+  }, 5000 + Math.random() * 3000);
+}
+
+// Iniciar spawning continuo
+function startSpawning() {
+  setPhase('spawning · ruido');
+  romboWrap.classList.remove('visible', 'pulsing');
+  decisionReveal.classList.remove('visible');
+  foot.classList.remove('bright');
+
+  // Spawn inicial denso
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => spawnBit(), i * 120);
+  }
+
+  // Spawn continuo después
+  function tick() {
+    if (phase !== 'spawning · ruido') return;
+    spawnBit();
+    spawnTimer = setTimeout(tick, 240 + Math.random() * 220);
+  }
+  setTimeout(tick, 2400);
+}
+
+// Convergencia: todos los bits colapsan al centro
+function startConverging() {
+  setPhase('converging');
+  if (spawnTimer) clearTimeout(spawnTimer);
+
+  // Cada bit se mueve al centro y desaparece
+  bits.forEach((bit, idx) => {
+    const startX = parseFloat(bit.dataset.startX);
+    const startY = parseFloat(bit.dataset.startY);
+    const dx = 50 - startX;
+    const dy = 50 - startY;
+
+    bit.style.transition = `transform 1.1s cubic-bezier(0.5, 0, 0.2, 1) ${idx * 18}ms, opacity 1s ease ${idx * 18}ms`;
+    bit.style.transform = `translate(calc(-50% + ${dx}%), calc(-50% + ${dy}%)) scale(0.3)`;
+    bit.style.opacity = '0';
+  });
+
+  // Limpiar bits después de la convergencia
+  setTimeout(() => {
+    bits.forEach(bit => { if (bit.parentNode) bit.parentNode.removeChild(bit); });
+    bits = [];
+  }, 1500);
+
+  // Aparece el rombo (escalado desde casi cero)
+  setTimeout(() => {
+    romboWrap.classList.add('visible', 'pulsing');
+  }, 850);
+
+  // Aparece la decisión
+  setTimeout(() => {
+    decisionReveal.classList.add('visible');
+    foot.classList.add('bright');
+    setPhase('revealed');
+  }, 1500);
+
+  // Programar reset
+  setTimeout(() => {
+    startResetting();
+  }, 5500);
+}
+
+// Reset suave
+function startResetting() {
+  setPhase('resetting');
+  decisionReveal.classList.remove('visible');
+  foot.classList.remove('bright');
+
+  setTimeout(() => {
+    romboWrap.classList.remove('visible', 'pulsing');
+  }, 600);
+
+  // Volver a spawning
+  setTimeout(() => {
+    startSpawning();
+    cycleTimer = setTimeout(startConverging, 6000);
+  }, 1800);
+}
+
+// Inicio del ciclo
+let started = false;
+function startCycle() {
+  if (started) return;
+  started = true;
+  startSpawning();
+  cycleTimer = setTimeout(startConverging, 5500);
+}
+
+// Trigger por scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+      startCycle();
+    }
+  });
+}, { threshold: [0.3] });
+
+window.addEventListener('load', () => {
+  observer.observe(stage);
+});
+
+// Reduced motion
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  observer.disconnect();
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      // Mostrar estado revelado estático con algunos datos visibles
+      for (let i = 0; i < 10; i++) spawnBit();
+      setTimeout(() => {
+        romboWrap.classList.add('visible');
+        decisionReveal.classList.add('visible');
+        foot.classList.add('bright');
+        setPhase('reduced-motion');
+      }, 800);
+    }, 500);
+  });
+}
+</script>
+
+</body>
+</html>
