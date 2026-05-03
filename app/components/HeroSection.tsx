@@ -1,8 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useConceptAnimation } from "../hooks/useConceptAnimation";
+import styles from "./Concept.module.css";
 
 const HeroSection = () => {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const { bits, romboVisible, romboPulsing, decisionVisible } = useConceptAnimation(stageRef);
   return (
     <section
       style={{
@@ -54,19 +59,6 @@ const HeroSection = () => {
             <div className="eyebrow" style={{ marginBottom: 40, paddingTop: 0 }}>
               <span>Consultora de Data Analytics · Chile</span>
             </div>
-
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 13,
-                color: "var(--ambar)",
-                marginBottom: 28,
-                letterSpacing: "0.04em",
-                fontWeight: 500,
-              }}
-            >
-              from raw data to real impact
-            </p>
 
             <motion.h1
               className="h-display"
@@ -143,25 +135,56 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right column — large mark, slow rotation */}
-          <div
-            className="hero-right"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <motion.svg
-              className="mk-bone mk-rombo"
-              viewBox="0 0 292 290"
-              style={{ width: 380, height: 380, opacity: 0.08 }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-              aria-hidden="true"
+          {/* Right column — concept animation */}
+          <div className="hero-right">
+            <div
+              ref={stageRef}
+              className={styles.stageHero}
+              role="img"
+              aria-label="Animación: datos dispersos convergiendo en una decisión central."
             >
-              <use href="#mark" />
-            </motion.svg>
+              <div className={styles.nebula} aria-hidden="true">
+                {bits.map((bit) => {
+                  const convergeX = 50 - bit.x;
+                  const convergeY = 50 - bit.y;
+                  const transform = bit.converging
+                    ? `translate(calc(-50% + ${convergeX}%), calc(-50% + ${convergeY}%)) scale(0.3)`
+                    : `translate(calc(-50% + ${bit.driftX}px), calc(-50% + ${bit.driftY}px))`;
+                  const opacity = bit.converging ? 0 : bit.opacity;
+                  const transition = bit.converging
+                    ? `transform 1.1s cubic-bezier(0.5, 0, 0.2, 1), opacity 1s ease`
+                    : `transform ${bit.driftDuration}s ease-in-out, opacity 0.8s ease`;
+                  return (
+                    <span
+                      key={bit.id}
+                      className={styles.bit}
+                      style={{ left: `${bit.x}%`, top: `${bit.y}%`, fontSize: bit.fontSize, opacity, transform, transition }}
+                    >
+                      {bit.text}
+                    </span>
+                  );
+                })}
+              </div>
+              <div
+                className={`${styles.romboWrap}${romboVisible ? ` ${styles.visible}` : ""}${romboPulsing ? ` ${styles.pulsing}` : ""}`}
+                aria-hidden="true"
+              >
+                <div className={styles.romboGlow} />
+                <svg className={styles.romboSvg} viewBox="0 0 100 100">
+                  <path className={styles.romboShape} d="M50 12 L88 50 L50 88 L12 50 Z" />
+                </svg>
+              </div>
+              <div
+                className={`${styles.decision}${decisionVisible ? ` ${styles.visible}` : ""}`}
+                aria-live="polite"
+              >
+                <span className={styles.pill}>Decisión</span>
+                <p className={styles.decisionText}>
+                  Priorizar retención en <span className={styles.accent}>segmento B</span>.<br />
+                  Impacto estimado: <span className={styles.accent}>+12% revenue Q3</span>.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

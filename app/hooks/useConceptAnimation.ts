@@ -221,22 +221,10 @@ export function useConceptAnimation(stageRef: React.RefObject<HTMLElement | null
       return () => clearAllTimers();
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-            observer.disconnect();
-            startCycle();
-          }
-        });
-      },
-      { threshold: [0.3] }
-    );
-
-    observer.observe(el);
+    const t = setTimeout(startCycle, 800);
 
     return () => {
-      observer.disconnect();
+      clearTimeout(t);
       clearAllTimers();
     };
   }, [stageRef, startCycle, startReducedMotion, clearAllTimers]);

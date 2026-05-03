@@ -27,7 +27,8 @@
   overflow: hidden;
 }
 
-.stage::before {
+.stage::before,
+.stageHero::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -174,6 +175,17 @@
 
 .foot.bright {
   opacity: 1;
+}
+
+/* Hero variant — fills the right column */
+.stageHero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 300px;
+  max-height: 560px;
+  overflow: hidden;
+  background: transparent;
 }
 
 /* Responsive */
