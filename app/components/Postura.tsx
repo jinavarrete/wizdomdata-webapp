@@ -87,6 +87,8 @@ const Postura = () => {
               style={{
                 borderTop: "1px solid var(--border-subtle)",
                 paddingTop: 28,
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <div

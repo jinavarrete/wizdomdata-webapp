@@ -95,6 +95,8 @@ const Capacidades = () => {
                 borderRight: "1px solid var(--border-default)",
                 borderBottom: "1px solid var(--border-default)",
                 transition: "background var(--t-base), border-color var(--t-base), transform var(--t-base)",
+                display: "flex",
+                flexDirection: "column",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;

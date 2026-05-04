@@ -91,6 +91,8 @@ const Impacto = () => {
                 borderBottom: "1px solid var(--border-default)",
                 transition: "background var(--t-base), border-color var(--t-base), transform var(--t-base)",
                 position: "relative",
+                display: "flex",
+                flexDirection: "column",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
