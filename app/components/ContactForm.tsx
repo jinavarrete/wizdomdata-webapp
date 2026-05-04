@@ -1,11 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import DiagnosticoMadurez from "./DiagnosticoMadurez/DiagnosticoMadurez";
 
 const Contacto = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [diagOpen, setDiagOpen] = useState(false);
+  const diagRef = useRef<HTMLDivElement>(null);
 
   return (
     <section
@@ -93,13 +96,14 @@ const Contacto = () => {
             </a>
           </div>
 
-          {/* Secondary card */}
+          {/* Secondary card — diagnostic trigger */}
           <div
             style={{
               padding: 36,
               background: "var(--surface-3)",
-              border: "1px solid var(--border-default)",
+              border: `1px solid ${diagOpen ? "var(--ambar)" : "var(--border-default)"}`,
               borderRadius: "var(--radius)",
+              transition: "border-color 0.2s ease",
             }}
           >
             <div
@@ -118,17 +122,36 @@ const Contacto = () => {
               Diagnóstico de madurez analítica.
             </h3>
             <p className="body" style={{ marginBottom: 24 }}>
-              Una hora, sin costo. Si no hay proyecto, te lo decimos.
+              Responde 6 preguntas y recibe un diagnóstico de tu nivel de madurez analítica. 2 minutos, sin costo.
             </p>
-            <a
-              href="mailto:hola@wizdomdata.cl?subject=Diagnóstico%20madurez%20analítica"
+            <button
               className="btn btn-secondary"
+              onClick={() => {
+                setDiagOpen(true);
+                setTimeout(() => {
+                  diagRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 50);
+              }}
             >
-              Solicitar diagnóstico
+              Empezar diagnóstico
               <span className="btn-arrow">→</span>
-            </a>
+            </button>
           </div>
         </motion.div>
+
+        {/* Diagnostic panel */}
+        {diagOpen && (
+          <div
+            ref={diagRef}
+            style={{
+              paddingTop: 48,
+              marginBottom: 64,
+              scrollMarginTop: 80,
+            }}
+          >
+            <DiagnosticoMadurez onClose={() => setDiagOpen(false)} />
+          </div>
+        )}
 
         {/* Meta line */}
         <motion.div
