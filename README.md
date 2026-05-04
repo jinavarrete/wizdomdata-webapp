@@ -144,5 +144,5 @@ El sitio incluye:
 ## Contacto
 
 Para consultas sobre el sitio web:
-- Email: contacto@wizdomdata.com
+- Email: hola@wizdomdata.cl
 - Sitio: https://wizdomdata.com

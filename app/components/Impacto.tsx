@@ -17,7 +17,7 @@ const cards = [
   {
     num: "03",
     claim: "Ventaja antes que el resto.",
-    body: "Cuando tu competencia recién pide un dashboard de churn, vos ya tenés el modelo en producción.",
+    body: "Cuando tu competencia recién pide un dashboard de churn, ya tienes el modelo en producción.",
   },
   {
     num: "04",

@@ -76,13 +76,13 @@ const Contacto = () => {
                 marginBottom: 16,
               }}
             >
-              Tenés un proyecto en mente
+              Tienes un proyecto en mente
             </div>
             <h3 className="h-3" style={{ marginBottom: 14 }}>
               Conversemos un proyecto.
             </h3>
             <p className="body" style={{ marginBottom: 24 }}>
-              Contanos qué problema querés resolver. Respondemos en 48 horas.
+              Cuéntanos qué problema quieres resolver.
             </p>
             <a
               href="mailto:hola@wizdomdata.cl"
@@ -112,7 +112,7 @@ const Contacto = () => {
                 marginBottom: 16,
               }}
             >
-              Todavía no sabés si tenés un proyecto
+              Todavía no sabes si tienes un proyecto
             </div>
             <h3 className="h-3" style={{ marginBottom: 14 }}>
               Diagnóstico de madurez analítica.

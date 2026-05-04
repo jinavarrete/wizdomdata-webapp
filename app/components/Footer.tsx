@@ -68,7 +68,7 @@ const Footer = () => {
               Contacto
             </h5>
             <a
-              href="mailto:contacto@wizdomdata.com"
+              href="mailto:hola@wizdomdata.cl"
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: 12,
@@ -82,7 +82,7 @@ const Footer = () => {
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ambar)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--bone)")}
             >
-              contacto@wizdomdata.com
+              hola@wizdomdata.cl
             </a>
             <a
               href="https://linkedin.com/company/wizdomdata"
@@ -122,7 +122,7 @@ const Footer = () => {
             </h5>
             {[
               { label: "Por qué existimos", href: "#porque" },
-              { label: "Por qué importa",   href: "#impacto" },
+              { label: "Lo que cambia",      href: "#impacto" },
               { label: "Cómo trabajamos",   href: "#postura" },
               { label: "Capacidades",        href: "#capacidades" },
               { label: "Equipo",             href: "#equipo" },

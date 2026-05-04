@@ -7,25 +7,25 @@ const caps = [
   {
     num: "01 · Data Engineering",
     title: "Pipelines, warehouses, integraciones en tiempo real.",
-    body: "Pipelines, warehouses, integraciones en tiempo real.",
+    body: "Centralizamos información dispersa entre sistemas, planillas y APIs. La base sobre la que después corre analítica, modelos y automatizaciones.",
     stack: "dbt · BigQuery · Databricks · AWS · Azure · GCP · SQL Server · Snowflake",
   },
   {
     num: "02 · Business Intelligence",
     title: "Dashboards que tu equipo abre todos los días.",
-    body: "Dashboards que tu equipo abre todos los días.",
+    body: "Reportes ejecutivos para directorio, vistas operativas para mandos medios, métricas correctas para cada rol. Pocas vistas, bien pensadas, sobre datos que cuadran.",
     stack: "Power BI · Tableau · Looker · Metabase",
   },
   {
     num: "03 · AI & Machine Learning",
     title: "Modelos predictivos y agentes con LLMs.",
-    body: "Modelos predictivos, agentes con LLMs, automatización con IA.",
+    body: "Desde un modelo de churn hasta un chatbot que responde sobre tu data warehouse. Asistentes conversacionales, automatización con IA, modelos en producción.",
     stack: "Python · scikit-learn · MLflow · OpenAI · Anthropic · LangChain · Vertex AI",
   },
   {
     num: "04 · Automatización & Data Products",
     title: "Cuando el proceso no existe, lo construimos.",
-    body: "Apps internas, integraciones, herramientas a medida.",
+    body: "Si una tarea se hace cinco veces al mes, la automatizamos. Apps internas, integraciones, herramientas a medida.",
     stack: "Python · Streamlit · n8n · APIs custom · Cloud Functions",
   },
 ];
