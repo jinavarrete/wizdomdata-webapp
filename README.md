@@ -1,6 +1,6 @@
 # WizdomData - Sitio Web Oficial
 
-Sitio web moderno y responsive para WizdomData, consultora especializada en Data Analytics, Business Intelligence y Data Engineering.
+CSitio web moderno y responsive para WizdomData, consultora especializada en Data Analytics, Business Intelligence y Data Engineering.
 
 ## Tecnologías
 
