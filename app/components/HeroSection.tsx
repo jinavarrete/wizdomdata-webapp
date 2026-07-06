@@ -152,7 +152,7 @@ const HeroSection = () => {
                     : `translate(calc(-50% + ${bit.driftX}px), calc(-50% + ${bit.driftY}px))`;
                   const opacity = bit.converging ? 0 : bit.opacity;
                   const transition = bit.converging
-                    ? `transform 1.1s cubic-bezier(0.5, 0, 0.2, 1), opacity 1s ease`
+                    ? `transform 0.75s cubic-bezier(0.5, 0, 0.2, 1), opacity 0.65s ease`
                     : `transform ${bit.driftDuration}s ease-in-out, opacity 0.8s ease`;
                   return (
                     <span

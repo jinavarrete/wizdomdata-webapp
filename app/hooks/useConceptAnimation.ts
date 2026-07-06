@@ -14,7 +14,7 @@ export interface BitData {
   fading: boolean;
 }
 
-export type AnimPhase = "idle" | "spawning" | "converging" | "revealed" | "resetting";
+export type AnimPhase = "idle" | "spawning" | "converging" | "revealed";
 
 interface ConceptAnimationState {
   bits: BitData[];
@@ -43,12 +43,22 @@ const DATA_POOL = [
 ];
 
 const MAX_BITS = 28;
+const SPAWN_COUNT = 20;
+
+/* Entrance sequence timings (ms). The full dispersión → foco → decisión run
+   must land inside 1.5–2.5s and play exactly once — no reset, no loop. */
+const START_DELAY = 250;      // let the headline start its own entrance first
+const SPAWN_STAGGER = 35;     // 20 bits over ~700ms of dispersión
+const CONVERGE_AT = 950;      // foco begins while the last bits are still settling
+const ROMBO_AT = 750;         // after converge: bits absorbed, rombo resolves
+const DECISION_AT = 1000;     // after converge: decisión legible
+
 let bitIdCounter = 0;
 
 // Approximate glyph advance of JetBrains Mono (~0.6em) plus the .bit letter-spacing.
 const MONO_CHAR_WIDTH = 0.62;
 
-function generateBit(stageW: number, stageH: number): BitData {
+function generateBit(stageW: number, stageH: number, noDrift = false): BitData {
   const text = DATA_POOL[Math.floor(Math.random() * DATA_POOL.length)];
 
   const sizeVariant = Math.random();
@@ -62,8 +72,8 @@ function generateBit(stageW: number, stageH: number): BitData {
     fontSize = 14; opacity = 0.9;
   }
 
-  const driftX = (Math.random() - 0.5) * 30;
-  const driftY = (Math.random() - 0.5) * 30;
+  const driftX = noDrift ? 0 : (Math.random() - 0.5) * 30;
+  const driftY = noDrift ? 0 : (Math.random() - 0.5) * 30;
 
   // Bits are centered on x/y (translate(-50%,-50%)) and the stage clips overflow,
   // so keep each bit's half-size plus its drift inside the stage, in % of the stage box.
@@ -100,9 +110,7 @@ export function useConceptAnimation(stageRef: React.RefObject<HTMLElement | null
   });
 
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const spawnIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startedRef = useRef(false);
-  const phaseRef = useRef<AnimPhase>("idle");
   const bitsRef = useRef<BitData[]>([]);
 
   const addTimer = useCallback((fn: () => void, delay: number) => {
@@ -114,57 +122,26 @@ export function useConceptAnimation(stageRef: React.RefObject<HTMLElement | null
   const clearAllTimers = useCallback(() => {
     timers.current.forEach(clearTimeout);
     timers.current = [];
-    if (spawnIntervalRef.current) {
-      clearTimeout(spawnIntervalRef.current);
-      spawnIntervalRef.current = null;
-    }
   }, []);
 
   const setPhase = useCallback((p: AnimPhase) => {
-    phaseRef.current = p;
     setState(s => ({ ...s, phase: p }));
   }, []);
 
-  const spawnBit = useCallback(() => {
+  const spawnBit = useCallback((noDrift = false) => {
     const stageW = stageRef.current?.clientWidth || 560;
     const stageH = stageRef.current?.clientHeight || 560;
     setState(s => {
       const next = [...s.bits];
       if (next.length >= MAX_BITS) next.shift();
-      const bit = generateBit(stageW, stageH);
+      const bit = generateBit(stageW, stageH, noDrift);
       bitsRef.current = [...next, bit];
       return { ...s, bits: bitsRef.current };
     });
   }, [stageRef]);
 
-  const startSpawning = useCallback(() => {
-    setPhase("spawning");
-    setState(s => ({
-      ...s,
-      romboVisible: false,
-      romboPulsing: false,
-      decisionVisible: false,
-      footBright: false,
-    }));
-
-    for (let i = 0; i < 20; i++) {
-      addTimer(spawnBit, i * 120);
-    }
-
-    const tick = () => {
-      if (phaseRef.current !== "spawning") return;
-      spawnBit();
-      spawnIntervalRef.current = setTimeout(tick, 240 + Math.random() * 220);
-    };
-    addTimer(tick, 2400);
-  }, [setPhase, spawnBit, addTimer]);
-
   const startConverging = useCallback(() => {
     setPhase("converging");
-    if (spawnIntervalRef.current) {
-      clearTimeout(spawnIntervalRef.current);
-      spawnIntervalRef.current = null;
-    }
 
     setState(s => ({
       ...s,
@@ -174,7 +151,7 @@ export function useConceptAnimation(stageRef: React.RefObject<HTMLElement | null
     addTimer(() => {
       setState(s => ({ ...s, bits: [], romboVisible: true, romboPulsing: true }));
       bitsRef.current = [];
-    }, 1500);
+    }, ROMBO_AT);
 
     addTimer(() => {
       setState(s => ({
@@ -184,48 +161,32 @@ export function useConceptAnimation(stageRef: React.RefObject<HTMLElement | null
         romboPulsing: false,
       }));
       setPhase("revealed");
-    }, 1500);
-
-    addTimer(() => startResetting(), 5500);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, DECISION_AT);
   }, [setPhase, addTimer]);
 
-  const startResetting = useCallback(() => {
-    setPhase("resetting");
-    setState(s => ({ ...s, decisionVisible: false, footBright: false }));
-
-    addTimer(() => {
-      setState(s => ({ ...s, romboVisible: false, romboPulsing: false }));
-    }, 600);
-
-    addTimer(() => {
-      startSpawning();
-      addTimer(startConverging, 6000);
-    }, 1800);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setPhase, addTimer, startSpawning]);
-
-  const startCycle = useCallback(() => {
+  const startSequence = useCallback(() => {
     if (startedRef.current) return;
     startedRef.current = true;
-    startSpawning();
-    addTimer(startConverging, 5500);
-  }, [startSpawning, startConverging, addTimer]);
+    setPhase("spawning");
+
+    for (let i = 0; i < SPAWN_COUNT; i++) {
+      addTimer(() => spawnBit(), i * SPAWN_STAGGER);
+    }
+
+    addTimer(startConverging, CONVERGE_AT);
+  }, [setPhase, spawnBit, startConverging, addTimer]);
 
   const startReducedMotion = useCallback(() => {
-    for (let i = 0; i < 10; i++) {
-      addTimer(spawnBit, i * 80);
-    }
-    addTimer(() => {
-      setState(s => ({
-        ...s,
-        romboVisible: true,
-        decisionVisible: true,
-        footBright: true,
-      }));
-      setPhase("revealed");
-    }, 800);
-  }, [spawnBit, addTimer, setPhase]);
+    // Static composition: scattered bits (no drift) + resolved decisión, no sequence.
+    for (let i = 0; i < 10; i++) spawnBit(true);
+    setState(s => ({
+      ...s,
+      romboVisible: true,
+      decisionVisible: true,
+      footBright: true,
+      phase: "revealed",
+    }));
+  }, [spawnBit]);
 
   useEffect(() => {
     const el = stageRef.current;
@@ -238,13 +199,13 @@ export function useConceptAnimation(stageRef: React.RefObject<HTMLElement | null
       return () => clearAllTimers();
     }
 
-    const t = setTimeout(startCycle, 800);
+    const t = setTimeout(startSequence, START_DELAY);
 
     return () => {
       clearTimeout(t);
       clearAllTimers();
     };
-  }, [stageRef, startCycle, startReducedMotion, clearAllTimers]);
+  }, [stageRef, startSequence, startReducedMotion, clearAllTimers]);
 
   return state;
 }

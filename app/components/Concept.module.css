@@ -74,7 +74,7 @@
   width: 80px;
   height: 80px;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.5s ease;
 }
 
 .romboWrap.visible {
@@ -92,7 +92,7 @@
 }
 
 .romboWrap.pulsing .romboShape {
-  animation: pulse 1.4s ease 0s 1;
+  animation: pulse 0.9s ease 0s 1;
 }
 
 @keyframes pulse {
@@ -107,7 +107,7 @@
   background: radial-gradient(circle at center, rgba(232, 128, 12, 0.15) 0%, transparent 60%);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 1.2s ease;
+  transition: opacity 0.8s ease;
 }
 
 .romboWrap.visible .romboGlow {
@@ -125,7 +125,7 @@
   text-align: center;
   z-index: 4;
   opacity: 0;
-  transition: opacity 0.8s ease 0.3s;
+  transition: opacity 0.5s ease 0.1s;
   pointer-events: none;
 }
 
