@@ -6,6 +6,10 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  // The brand typography classes h-1..h-4 (globals.css, BRAND.md scale) collide with
+  // Tailwind's height utilities: JIT sees className="h-3" and emits `.h-3 { height: 0.75rem }`,
+  // collapsing every title box. Blocked so the brand classes keep those names.
+  blocklist: ["h-1", "h-2", "h-3", "h-4"],
   theme: {
     extend: {
       colors: {

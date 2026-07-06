@@ -45,11 +45,11 @@ const DATA_POOL = [
 const MAX_BITS = 28;
 let bitIdCounter = 0;
 
-function generateBit(): BitData {
-  const angle = Math.random() * Math.PI * 2;
-  const radiusPct = 22 + Math.random() * 28;
-  const x = Math.max(2, Math.min(98, 50 + Math.cos(angle) * radiusPct * 1.5));
-  const y = Math.max(4, Math.min(96, 50 + Math.sin(angle) * radiusPct));
+// Approximate glyph advance of JetBrains Mono (~0.6em) plus the .bit letter-spacing.
+const MONO_CHAR_WIDTH = 0.62;
+
+function generateBit(stageW: number, stageH: number): BitData {
+  const text = DATA_POOL[Math.floor(Math.random() * DATA_POOL.length)];
 
   const sizeVariant = Math.random();
   let fontSize: number;
@@ -62,12 +62,27 @@ function generateBit(): BitData {
     fontSize = 14; opacity = 0.9;
   }
 
+  const driftX = (Math.random() - 0.5) * 30;
+  const driftY = (Math.random() - 0.5) * 30;
+
+  // Bits are centered on x/y (translate(-50%,-50%)) and the stage clips overflow,
+  // so keep each bit's half-size plus its drift inside the stage, in % of the stage box.
+  const halfW = (text.length * fontSize * MONO_CHAR_WIDTH) / 2;
+  const halfH = fontSize * 0.75;
+  const marginX = Math.min(30, ((halfW + Math.abs(driftX)) / stageW) * 100 + 1);
+  const marginY = Math.min(20, ((halfH + Math.abs(driftY)) / stageH) * 100 + 1);
+
+  const angle = Math.random() * Math.PI * 2;
+  const radiusPct = 22 + Math.random() * 28;
+  const x = Math.max(marginX, Math.min(100 - marginX, 50 + Math.cos(angle) * radiusPct * 1.5));
+  const y = Math.max(marginY, Math.min(100 - marginY, 50 + Math.sin(angle) * radiusPct));
+
   return {
     id: ++bitIdCounter,
-    text: DATA_POOL[Math.floor(Math.random() * DATA_POOL.length)],
+    text,
     x, y, fontSize, opacity,
-    driftX: (Math.random() - 0.5) * 30,
-    driftY: (Math.random() - 0.5) * 30,
+    driftX,
+    driftY,
     driftDuration: 8 + Math.random() * 6,
     converging: false,
     fading: false,
@@ -111,14 +126,16 @@ export function useConceptAnimation(stageRef: React.RefObject<HTMLElement | null
   }, []);
 
   const spawnBit = useCallback(() => {
+    const stageW = stageRef.current?.clientWidth || 560;
+    const stageH = stageRef.current?.clientHeight || 560;
     setState(s => {
       const next = [...s.bits];
       if (next.length >= MAX_BITS) next.shift();
-      const bit = generateBit();
+      const bit = generateBit(stageW, stageH);
       bitsRef.current = [...next, bit];
       return { ...s, bits: bitsRef.current };
     });
-  }, []);
+  }, [stageRef]);
 
   const startSpawning = useCallback(() => {
     setPhase("spawning");
