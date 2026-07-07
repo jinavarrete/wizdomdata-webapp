@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+
+const REVEAL_VIEWPORT = { once: true, margin: "0px 0px -60px 0px" } as const;
 
 const people = [
   {
@@ -19,13 +20,9 @@ const people = [
 ];
 
 const Team = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <section
       id="equipo"
-      ref={ref}
       style={{ borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
@@ -38,9 +35,10 @@ const Team = () => {
         {/* Section header */}
         <motion.div
           className="sec-head"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <div className="left">
             <div className="eyebrow">
@@ -74,9 +72,10 @@ const Team = () => {
           {people.map((person, i) => (
             <motion.div
               key={person.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.12 }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: 0.45, ease: "easeOut", delay: i * 0.1 }}
               style={{
                 background: "var(--surface-2)",
                 border: "1px solid var(--border-default)",

@@ -1,19 +1,18 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import DiagnosticoMadurez from "./DiagnosticoMadurez/DiagnosticoMadurez";
 
+const REVEAL_VIEWPORT = { once: true, margin: "0px 0px -60px 0px" } as const;
+
 const Contacto = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const [diagOpen, setDiagOpen] = useState(false);
   const diagRef = useRef<HTMLDivElement>(null);
 
   return (
     <section
       id="contacto"
-      ref={ref}
       style={{ background: "var(--surface-2)", borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
@@ -26,9 +25,10 @@ const Contacto = () => {
         {/* Closing head */}
         <motion.div
           style={{ maxWidth: 820, marginBottom: 80 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <div className="eyebrow" style={{ marginBottom: 32 }}>
             <span className="num">05</span>
@@ -46,10 +46,7 @@ const Contacto = () => {
         </motion.div>
 
         {/* CTA cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.15 }}
+        <div
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -61,7 +58,11 @@ const Contacto = () => {
           className="cta-block"
         >
           {/* Primary card */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={REVEAL_VIEWPORT}
+            transition={{ duration: 0.45, ease: "easeOut" }}
             style={{
               padding: 36,
               background: "var(--surface-3)",
@@ -94,10 +95,14 @@ const Contacto = () => {
               Escribir a hola@wizdomdata.cl
               <span className="btn-arrow">→</span>
             </a>
-          </div>
+          </motion.div>
 
           {/* Secondary card — diagnostic trigger */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={REVEAL_VIEWPORT}
+            transition={{ duration: 0.45, ease: "easeOut", delay: 0.08 }}
             style={{
               padding: 36,
               background: "var(--surface-3)",
@@ -136,8 +141,8 @@ const Contacto = () => {
               Empezar diagnóstico
               <span className="btn-arrow">→</span>
             </button>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Diagnostic panel */}
         {diagOpen && (
@@ -156,8 +161,9 @@ const Contacto = () => {
         {/* Meta line */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          whileInView={{ opacity: 1 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
           style={{
             borderTop: "1px solid var(--rule)",
             paddingTop: 32,

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MarkSprite from "./components/MarkSprite";
+import MotionProvider from "./components/MotionProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -62,7 +63,9 @@ export default function RootLayout({
       <body>
         <MarkSprite />
         <Navbar />
-        <main>{children}</main>
+        <main>
+          <MotionProvider>{children}</MotionProvider>
+        </main>
         <Footer />
       </body>
     </html>

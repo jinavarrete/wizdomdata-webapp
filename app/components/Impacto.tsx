@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, animate, useInView, useReducedMotion } from "framer-motion";
 
 interface ImpactCard {
   num: string;
@@ -36,14 +36,70 @@ const cards: ImpactCard[] = [
   },
 ];
 
-const Impacto = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+const REVEAL_VIEWPORT = { once: true, margin: "0px 0px -60px 0px" } as const;
 
+/* Fase 3: the emphasized figure counts up to its value when revealed —
+   the differentiated entrance for the section's single emphasis point. */
+const StatCounter = ({ value, unit }: { value: string; unit: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "0px 0px -60px 0px" });
+  const reduced = useReducedMotion();
+
+  const parsed = value.match(/^(\D*)(\d+)(.*)$/);
+  const prefix = parsed?.[1] ?? "";
+  const target = parsed ? parseInt(parsed[2], 10) : 0;
+  const suffix = parsed?.[3] ?? "";
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    if (reduced) {
+      setN(target);
+      return;
+    }
+    const controls = animate(0, target, {
+      duration: 0.7,
+      delay: 0.3,
+      ease: "easeOut",
+      onUpdate: (v) => setN(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, reduced, target]);
+
+  return (
+    <div
+      ref={ref}
+      data-stat
+      style={{
+        fontFamily: "var(--font-mono)",
+        fontWeight: 500,
+        fontSize: "clamp(40px, 4.5vw, 56px)",
+        lineHeight: 1,
+        letterSpacing: "-0.01em",
+        color: "var(--bone)",
+        marginBottom: 20,
+      }}
+    >
+      {prefix}{n}{suffix}
+      <span
+        style={{
+          fontSize: 15,
+          fontWeight: 400,
+          color: "var(--bone-3)",
+          letterSpacing: "0.06em",
+          marginLeft: 8,
+        }}
+      >
+        {unit}
+      </span>
+    </div>
+  );
+};
+
+const Impacto = () => {
   return (
     <section
       id="impacto"
-      ref={ref}
       style={{ background: "var(--surface-2)", borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
@@ -56,9 +112,10 @@ const Impacto = () => {
         {/* Section header */}
         <motion.div
           className="sec-head"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <div className="left">
             <div className="eyebrow">
@@ -92,8 +149,9 @@ const Impacto = () => {
             <motion.div
               key={card.num}
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: 0.45, ease: "easeOut", delay: i * 0.08 }}
               style={{
                 padding: "56px 48px",
                 background: "var(--surface-3)",
@@ -129,33 +187,7 @@ const Impacto = () => {
               >
                 {card.num}
               </span>
-              {card.stat && (
-                <div
-                  data-stat
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontWeight: 500,
-                    fontSize: "clamp(40px, 4.5vw, 56px)",
-                    lineHeight: 1,
-                    letterSpacing: "-0.01em",
-                    color: "var(--bone)",
-                    marginBottom: 20,
-                  }}
-                >
-                  {card.stat.value}
-                  <span
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 400,
-                      color: "var(--bone-3)",
-                      letterSpacing: "0.06em",
-                      marginLeft: 8,
-                    }}
-                  >
-                    {card.stat.unit}
-                  </span>
-                </div>
-              )}
+              {card.stat && <StatCounter value={card.stat.value} unit={card.stat.unit} />}
               <h3
                 style={{
                   fontFamily: "var(--font-body)",

@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+
+const REVEAL_VIEWPORT = { once: true, margin: "0px 0px -60px 0px" } as const;
 
 interface Cap {
   num: string;
@@ -42,13 +43,9 @@ const caps: Cap[] = [
 ];
 
 const Capacidades = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <section
       id="capacidades"
-      ref={ref}
       style={{ background: "var(--surface-2)", borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
@@ -61,9 +58,10 @@ const Capacidades = () => {
         {/* Section header */}
         <motion.div
           className="sec-head"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <div className="left">
             <div className="eyebrow">
@@ -98,8 +96,10 @@ const Capacidades = () => {
             <motion.div
               key={cap.num}
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={REVEAL_VIEWPORT}
+              /* Featured cell lands last: small extra delay marks the emphasis. */
+              transition={{ duration: 0.45, ease: "easeOut", delay: i * 0.08 + (cap.featured ? 0.12 : 0) }}
               style={{
                 padding: "48px 40px 56px",
                 background: "var(--surface-3)",

@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+
+const REVEAL_VIEWPORT = { once: true, margin: "0px 0px -60px 0px" } as const;
 
 const stances = [
   {
@@ -22,13 +23,9 @@ const stances = [
 ];
 
 const Postura = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <section
       id="postura"
-      ref={ref}
       style={{ borderTop: "1px solid var(--border-subtle)" }}
     >
       <div
@@ -41,9 +38,10 @@ const Postura = () => {
         {/* Section header */}
         <motion.div
           className="sec-head"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <div className="left">
             <div className="eyebrow">
@@ -81,9 +79,10 @@ const Postura = () => {
           {stances.map((item, i) => (
             <motion.div
               key={item.pill}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: 0.45, ease: "easeOut", delay: i * 0.1 }}
               style={{
                 borderTop: "1px solid var(--border-subtle)",
                 paddingTop: 28,
