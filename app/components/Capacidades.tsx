@@ -3,12 +3,23 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-const caps = [
+interface Cap {
+  num: string;
+  title: string;
+  body: string;
+  stack: string;
+  /* Single emphasis point of the section (Fase 2): bigger typographic
+     hierarchy inside the cell, stack line as protagonist. Only one card. */
+  featured?: boolean;
+}
+
+const caps: Cap[] = [
   {
     num: "01 · Data Engineering",
     title: "Pipelines, warehouses, integraciones en tiempo real.",
     body: "Centralizamos información dispersa entre sistemas, planillas y APIs. La base sobre la que después corre analítica, modelos y automatizaciones.",
     stack: "dbt · BigQuery · Databricks · AWS · Azure · GCP · SQL Server · Snowflake",
+    featured: true,
   },
   {
     num: "02 · Business Intelligence",
@@ -120,8 +131,10 @@ const Capacidades = () => {
               >
                 {cap.num}
               </div>
-              <h3 className="h-3" style={{ marginBottom: 16 }}>{cap.title}</h3>
-              <p className="body" style={{ marginBottom: 32, maxWidth: "46ch" }}>
+              <h3 className={cap.featured ? "h-mid" : "h-3"} style={{ marginBottom: 16 }}>
+                {cap.title}
+              </h3>
+              <p className={cap.featured ? "body-l" : "body"} style={{ marginBottom: 32, maxWidth: "46ch" }}>
                 {cap.body}
               </p>
               <div
@@ -129,13 +142,13 @@ const Capacidades = () => {
                   background: "var(--surface-1)",
                   border: "1px solid var(--border-subtle)",
                   borderRadius: "var(--radius)",
-                  padding: "8px 12px",
+                  padding: cap.featured ? "12px 16px" : "8px 12px",
                   marginTop: 8,
                   fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  color: "var(--text-tertiary)",
+                  fontSize: cap.featured ? 13 : 11,
+                  color: cap.featured ? "var(--text-secondary)" : "var(--text-tertiary)",
                   letterSpacing: "0.04em",
-                  lineHeight: 1.5,
+                  lineHeight: cap.featured ? 1.7 : 1.5,
                 }}
               >
                 <span style={{ color: "var(--ambar)", marginRight: 6 }}>Stack</span>

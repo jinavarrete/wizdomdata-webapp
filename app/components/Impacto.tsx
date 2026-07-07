@@ -3,7 +3,16 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-const cards = [
+interface ImpactCard {
+  num: string;
+  claim: string;
+  body: string;
+  /* Single emphasis point of the section (Fase 2): a real figure already
+     present in the copy, set big in JetBrains Mono. Only one card gets it. */
+  stat?: { value: string; unit: string };
+}
+
+const cards: ImpactCard[] = [
   {
     num: "01",
     claim: "Decisiones más rápidas, no más reportes.",
@@ -13,6 +22,7 @@ const cards = [
     num: "02",
     claim: "Eficiencia donde antes había trabajo manual.",
     body: "Las cinco horas semanales que tu analista pasa en Excel dejan de existir.",
+    stat: { value: "−5 h", unit: "/semana" },
   },
   {
     num: "03",
@@ -119,6 +129,33 @@ const Impacto = () => {
               >
                 {card.num}
               </span>
+              {card.stat && (
+                <div
+                  data-stat
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontWeight: 500,
+                    fontSize: "clamp(40px, 4.5vw, 56px)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.01em",
+                    color: "var(--bone)",
+                    marginBottom: 20,
+                  }}
+                >
+                  {card.stat.value}
+                  <span
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 400,
+                      color: "var(--bone-3)",
+                      letterSpacing: "0.06em",
+                      marginLeft: 8,
+                    }}
+                  >
+                    {card.stat.unit}
+                  </span>
+                </div>
+              )}
               <h3
                 style={{
                   fontFamily: "var(--font-body)",
