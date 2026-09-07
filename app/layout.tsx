@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import MarkSprite from "./components/MarkSprite";
 import MotionProvider from "./components/MotionProvider";
 
@@ -21,9 +19,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WizdomData · Partner analítico para empresas modernas",
+  metadataBase: new URL("https://wizdomdata.vercel.app"),
+  alternates: { canonical: "/" },
+  twitter: { card: "summary_large_image", images: ["/opengraph-image"], title: "WizdomData · Datos, analítica e IA", description: "Tu partner para convertir datos en decisiones." },
+  title: "WizdomData — La claridad cambia todo",
   description:
-    "Consultora de data analytics con base en Chile. Diseñamos, construimos y operamos la capa analítica que convierte datos en decisiones.",
+    "Tu partner en datos e inteligencia artificial. Conectamos estrategia, ingeniería y analítica para que tu negocio avance con mejores decisiones.",
   keywords: [
     "data analytics",
     "business intelligence",
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_CL",
-    url: "https://wizdomdata.cl",
-    title: "WizdomData · Partner analítico para empresas modernas",
+    url: "https://wizdomdata.vercel.app",
+    title: "WizdomData — La claridad cambia todo",
     description:
       "Consultora de data analytics con base en Chile. Del dato a la decisión.",
     siteName: "WizdomData",
@@ -58,15 +59,13 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/favicon.svg" />
       </head>
       <body>
         <MarkSprite />
-        <Navbar />
         <main>
           <MotionProvider>{children}</MotionProvider>
         </main>
-        <Footer />
       </body>
     </html>
   );

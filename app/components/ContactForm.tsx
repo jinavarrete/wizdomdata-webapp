@@ -1,14 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import DiagnosticoMadurez from "./DiagnosticoMadurez/DiagnosticoMadurez";
+import DiagnosticModal from "./DiagnosticModal";
 
 const REVEAL_VIEWPORT = { once: true, margin: "0px 0px -60px 0px" } as const;
 
 const Contacto = () => {
   const [diagOpen, setDiagOpen] = useState(false);
-  const diagRef = useRef<HTMLDivElement>(null);
+
 
   return (
     <section
@@ -17,7 +17,7 @@ const Contacto = () => {
     >
       <div
         style={{
-          padding: "140px var(--pad-x) 120px",
+          padding: "88px var(--pad-x)",
           maxWidth: "var(--max-width)",
           margin: "0 auto",
         }}
@@ -131,12 +131,7 @@ const Contacto = () => {
             </p>
             <button
               className="btn btn-secondary"
-              onClick={() => {
-                setDiagOpen(true);
-                setTimeout(() => {
-                  diagRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 50);
-              }}
+              onClick={() => setDiagOpen(true)}
             >
               Empezar diagnóstico
               <span className="btn-arrow">→</span>
@@ -145,18 +140,7 @@ const Contacto = () => {
         </div>
 
         {/* Diagnostic panel */}
-        {diagOpen && (
-          <div
-            ref={diagRef}
-            style={{
-              paddingTop: 48,
-              marginBottom: 64,
-              scrollMarginTop: 80,
-            }}
-          >
-            <DiagnosticoMadurez onClose={() => setDiagOpen(false)} />
-          </div>
-        )}
+        {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}
 
         {/* Meta line */}
         <motion.div

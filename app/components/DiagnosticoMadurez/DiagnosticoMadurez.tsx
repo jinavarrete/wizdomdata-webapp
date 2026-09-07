@@ -23,8 +23,8 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
   const [markerLeft, setMarkerLeft] = useState(0);
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
-  const [emailValue, setEmailValue] = useState("");
+
+
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -47,27 +47,25 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
     if (currentAnswer === null) return;
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((q) => q + 1);
-      containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      containerRef.current?.closest("dialog")?.scrollTo({ top: 0 });
     } else {
       setMarkerLeft(0);
       setScreen("result");
-      containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      containerRef.current?.closest("dialog")?.scrollTo({ top: 0 });
     }
   }, [currentAnswer, currentQuestion]);
 
   // Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (screen !== "question") return;
+      if (screen !== "question" || e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key >= "1" && e.key <= "3") {
         const idx = parseInt(e.key) - 1;
         if (idx < questions[currentQuestion].options.length) {
           selectOption(idx);
         }
       }
-      if (e.key === "Enter") {
-        handleNext();
-      }
+
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -93,41 +91,26 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
   const handleRestart = () => {
     setAnswers(Array(questions.length).fill(null));
     setCurrentQuestion(0);
-    setEmailValue("");
-    setEmailSubmitted(false);
+
+
     setMarkerLeft(0);
     setScreen("question");
-    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    containerRef.current?.closest("dialog")?.scrollTo({ top: 0 });
   };
 
-  const handleEmailSubmit = () => {
-    if (!emailValue || !emailValue.includes("@")) return;
-    const payload = {
-      email: emailValue,
-      score,
-      profile: profile.key,
-      answers: (answers as number[]).map((a, i) => ({
-        question: questions[i].dimension,
-        selected: questions[i].options[a].marker,
-        score: questions[i].options[a].score,
-      })),
-      timestamp: new Date().toISOString(),
-    };
-    console.log("Lead captured:", payload);
-    setEmailSubmitted(true);
-  };
 
   const safeIndex = Math.min(currentQuestion, questions.length - 1);
   const q = questions[safeIndex];
 
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
+      <div className="diagnostic-header"><span>{screen === "question" ? `${String(currentQuestion + 1).padStart(2, "0")} / 06 · ${questions[currentQuestion].dimension}` : "Tu diagnóstico"}</span>
       {/* Close button */}
       <button
         onClick={onClose}
         aria-label="Cerrar diagnóstico"
         style={{
-          position: "absolute",
+          position: "static",
           top: 0,
           right: 0,
           fontFamily: "var(--font-mono)",
@@ -145,49 +128,14 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
         onMouseLeave={(e) => (e.currentTarget.style.color = "var(--bone-3)")}
       >
         ✕ Cerrar
-      </button>
+      </button></div>
 
-      <div style={{ maxWidth: 640, margin: "0 auto" }}>
+      <div className="diagnostic-content" style={{ maxWidth: 640, margin: "0 auto" }}>
         {/* ---- QUESTION SCREEN ---- */}
         {screen === "question" && (
           <div key={`q-${currentQuestion}`} style={{ animation: "diag-fade 300ms ease" }}>
-            {/* Header */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: 36,
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  letterSpacing: "0.08em",
-                  color: "var(--bone-3)",
-                }}
-              >
-                <strong style={{ color: "var(--bone)", fontWeight: 500 }}>
-                  {String(currentQuestion + 1).padStart(2, "0")}
-                </strong>{" "}
-                / 06
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "var(--ambar)",
-                }}
-              >
-                {q.dimension}
-              </div>
-            </div>
-
             {/* Question text */}
-            <h3
+            <h3 id="diagnostic-question" aria-live="polite"
               style={{
                 fontSize: "clamp(20px, 4vw, 24px)",
                 fontWeight: 600,
@@ -202,13 +150,13 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
             </h3>
 
             {/* Options */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 36 }}>
+            <div role="radiogroup" aria-labelledby="diagnostic-question" style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 36 }}>
               {q.options.map((opt, i) => {
                 const selected = currentAnswer === i;
                 return (
-                  <button
+                  <label
+                    className="diagnostic-option"
                     key={i}
-                    onClick={() => selectOption(i)}
                     style={{
                       border: `1px solid ${selected ? "var(--ambar)" : "rgba(232, 227, 214, 0.12)"}`,
                       borderRadius: "var(--radius)",
@@ -230,6 +178,7 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
                       if (!selected) e.currentTarget.style.borderColor = "rgba(232, 227, 214, 0.12)";
                     }}
                   >
+                    <input type="radio" name={`question-${currentQuestion}`} checked={selected} onChange={() => selectOption(i)} aria-label={opt.text} className="diagnostic-radio" />
                     <span
                       style={{
                         fontFamily: "var(--font-mono)",
@@ -263,7 +212,7 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
                         width: 18,
                         height: 18,
                         border: `1px solid ${selected ? "var(--ambar)" : "rgba(232, 227, 214, 0.12)"}`,
-                        borderRadius: "var(--radius)",
+                        borderRadius: "50%",
                         background: selected ? "var(--ambar)" : "transparent",
                         display: "flex",
                         alignItems: "center",
@@ -279,12 +228,12 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
                             height: 6,
                             background: "var(--tinta)",
                             display: "block",
-                            transform: "rotate(45deg)",
+                            borderRadius: "50%",
                           }}
                         />
                       )}
                     </span>
-                  </button>
+                  </label>
                 );
               })}
             </div>
@@ -487,99 +436,7 @@ export default function DiagnosticoMadurez({ onClose }: DiagnosticoMadurezProps)
               />
             </div>
 
-            {/* CTA */}
-            {profile.cta && (
-              <div style={{ marginBottom: 40 }}>
-                <a
-                  href="#contacto"
-                  className="btn btn-primary"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  {profile.cta}
-                  <span className="btn-arrow">→</span>
-                </a>
-              </div>
-            )}
-
-            {/* Email capture */}
-            <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 28, marginBottom: 24 }}>
-              <p
-                style={{
-                  fontSize: 13,
-                  color: "var(--bone-3)",
-                  marginBottom: 14,
-                  lineHeight: 1.55,
-                  maxWidth: "48ch",
-                }}
-              >
-                {profile.emailPrompt}
-              </p>
-              {!emailSubmitted ? (
-                <div style={{ display: "flex", gap: 8 }} className="diag-email-row">
-                  <input
-                    type="email"
-                    value={emailValue}
-                    onChange={(e) => setEmailValue(e.target.value)}
-                    placeholder="tu@empresa.cl"
-                    onKeyDown={(e) => { if (e.key === "Enter") handleEmailSubmit(); }}
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: 13,
-                      background: "rgba(232, 227, 214, 0.06)",
-                      border: "1px solid rgba(232, 227, 214, 0.12)",
-                      borderRadius: "var(--radius)",
-                      padding: "10px 14px",
-                      color: "var(--bone)",
-                      flex: 1,
-                      outline: "none",
-                      transition: "border-color 0.15s ease",
-                    }}
-                    onFocus={(e) => (e.currentTarget.style.borderColor = "var(--ambar)")}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(232, 227, 214, 0.12)")}
-                  />
-                  <button
-                    onClick={handleEmailSubmit}
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 11,
-                      letterSpacing: "0.06em",
-                      background: "rgba(232, 227, 214, 0.08)",
-                      border: "1px solid rgba(232, 227, 214, 0.12)",
-                      borderRadius: "var(--radius)",
-                      padding: "10px 18px",
-                      color: "var(--bone)",
-                      cursor: "pointer",
-                      transition: "background 0.15s ease, border-color 0.15s ease",
-                      whiteSpace: "nowrap",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "rgba(232, 227, 214, 0.12)";
-                      e.currentTarget.style.borderColor = "rgba(232, 227, 214, 0.2)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "rgba(232, 227, 214, 0.08)";
-                      e.currentTarget.style.borderColor = "rgba(232, 227, 214, 0.12)";
-                    }}
-                  >
-                    Enviar
-                  </button>
-                </div>
-              ) : (
-                <p
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 12,
-                    color: "var(--ambar)",
-                    padding: "10px 0",
-                  }}
-                >
-                  ◆ Listo. Lo recibirás en los próximos minutos.
-                </p>
-              )}
-            </div>
+            <div className="diagnostic-followup"><p>Este resultado es orientativo y se basa en tus respuestas. Conversemos sobre el siguiente paso para tu negocio.</p><a className="btn btn-primary" href={`mailto:hola@wizdomdata.cl?subject=${encodeURIComponent("Mi diagnóstico analítico")}&body=${encodeURIComponent("Hola, completé el diagnóstico. Mi perfil es " + profile.key + " y mi puntaje es " + score + ". Me gustaría conversar sobre los siguientes pasos.")}`}>Conversar sobre mi resultado ↗</a><small>Abre tu aplicación de correo con el resultado preparado para enviar.</small></div>
 
             {/* Footer */}
             <div

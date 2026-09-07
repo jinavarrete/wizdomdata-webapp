@@ -6,17 +6,17 @@ const REVEAL_VIEWPORT = { once: true, margin: "0px 0px -60px 0px" } as const;
 
 const stances = [
   {
-    pill: "Postura · 01",
+    pill: "01 / Entender",
     title: "Pensamos antes de implementar.",
     body: "Cada proyecto empieza con una conversación de negocio, no con un kickoff técnico. Si lo que pediste originalmente no es lo que necesitas, lo decimos.",
   },
   {
-    pill: "Postura · 02",
-    title: "Traemos know-how, no manos.",
-    body: "Después de años en industrias tradicionales, sabemos qué proyectos generan valor real y cuáles son cementerios de tiempo. Ese criterio es lo que se compra.",
+    pill: "02 / Construir",
+    title: "Del criterio a una solución que funciona.",
+    body: "Priorizamos un primer alcance, validamos con tu equipo y construimos con pruebas, documentación y seguimiento. Cada entrega tiene un propósito de negocio.",
   },
   {
-    pill: "Postura · 03",
+    pill: "03 / Acompañar",
     title: "Construimos para que tu equipo tome el control.",
     body: "Documentamos el código, capacitamos al equipo, dejamos el repositorio en tu organización. No vendemos dependencia.",
   },
@@ -30,7 +30,7 @@ const Postura = () => {
     >
       <div
         style={{
-          padding: "120px var(--pad-x)",
+          padding: "88px var(--pad-x)",
           maxWidth: "var(--max-width)",
           margin: "0 auto",
         }}

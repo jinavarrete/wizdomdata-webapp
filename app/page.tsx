@@ -1,19 +1,6 @@
-import HeroSection from "./components/HeroSection";
-import Impacto from "./components/Impacto";
-import Postura from "./components/Postura";
-import Capacidades from "./components/Capacidades";
-import Team from "./components/Team";
-import ContactForm from "./components/ContactForm";
+import NewDirection from "./v2/NewDirection";
+import "./v2/v2.css";
 
 export default function Home() {
-  return (
-    <>
-      <HeroSection />
-      <Impacto />
-      <Postura />
-      <Capacidades />
-      <Team />
-      <ContactForm />
-    </>
-  );
+  return <NewDirection />;
 }

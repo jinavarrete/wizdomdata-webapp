@@ -121,7 +121,7 @@ const Footer = () => {
               Sitio
             </h5>
             {[
-              { label: "Por qué existimos", href: "#porque" },
+              { label: "Inicio", href: "#inicio" },
               { label: "Lo que cambia",      href: "#impacto" },
               { label: "Cómo trabajamos",   href: "#postura" },
               { label: "Capacidades",        href: "#capacidades" },
@@ -166,7 +166,7 @@ const Footer = () => {
           }}
         >
           <span>© {year} WizdomData SpA</span>
-          <span>Edición 02 · v1.0</span>
+          <span>Datos. Criterio. Decisiones.</span>
         </div>
       </div>
 

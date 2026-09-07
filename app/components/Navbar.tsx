@@ -63,7 +63,7 @@ const Navbar = () => {
 
         {/* Desktop links */}
         <div
-          className="hidden md:flex"
+          className="desktop-nav"
           style={{ alignItems: "center", gap: 32 }}
         >
           {navLinks.map((link) => (
@@ -96,7 +96,9 @@ const Navbar = () => {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden"
+          className="mobile-toggle"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
           onClick={() => setMobileOpen((o) => !o)}
           aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
           style={{

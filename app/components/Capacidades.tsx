@@ -50,7 +50,7 @@ const Capacidades = () => {
     >
       <div
         style={{
-          padding: "120px var(--pad-x)",
+          padding: "88px var(--pad-x)",
           maxWidth: "var(--max-width)",
           margin: "0 auto",
         }}
