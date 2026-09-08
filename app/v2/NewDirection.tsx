@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Plus, Minus, Menu, X } from "lucide-react";
 import DiagnosticModal from "../components/DiagnosticModal";
 import MethodJourney from "./MethodJourney";
+import BrandFilm from "./BrandFilm";
 
 const services = [
   {
@@ -63,12 +64,13 @@ export default function NewDirection() {
       <div className="v2-hero-baseline"><span>Una mirada de negocio. Toda la capacidad técnica.</span><a href="#servicios">Conoce WizdomData <ArrowRight size={16} /></a></div>
     </section>
 
-    <section className="v2-client-strip" aria-label="Proyectos en curso">
+    <section className="v2-client-strip" aria-label="Empresas que confían en nosotros">
       <div className="v2-shell v2-client-strip-inner">
-        <div><p>Proyectos en curso</p><span>Ya estamos trabajando junto a</span></div>
+        <div><p>Empresas que confían en nosotros</p><span>Construimos valor junto a sus equipos</span></div>
         <div className="v2-client-logos">
           <Image src="/images/clients/transportes-schiappacasse.png" alt="Transportes Schiappacasse" width={200} height={200} sizes="90px" className="v2-client-transport" />
           <Image src="/images/clients/contempora.png" alt="Contempora Seguros Generales" width={541} height={200} sizes="230px" className="v2-client-contempora" />
+          <Image src="/images/clients/dev-mentor.png" alt="Dev-Mentor" width={1000} height={151} sizes="230px" className="v2-client-devmentor" />
         </div>
       </div>
     </section>
@@ -80,6 +82,8 @@ export default function NewDirection() {
       </div>
       <div className="v2-shell v2-ecosystem"><span>Nos integramos a tu ecosistema</span><div><span>Microsoft</span><span>aws</span><span>Google Cloud</span><span>Databricks</span><span>dbt</span></div></div>
     </section>
+
+    <BrandFilm />
 
     <section id="metodo" className="v2-method v2-shell">
       <div className="v2-section-heading"><p className="v2-kicker">Cómo trabajamos</p><h2>Primero tu negocio.<br /><span>Después, la tecnología.</span></h2></div>
