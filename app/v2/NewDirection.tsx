@@ -63,6 +63,16 @@ export default function NewDirection() {
       <div className="v2-hero-baseline"><span>Una mirada de negocio. Toda la capacidad técnica.</span><a href="#servicios">Conoce WizdomData <ArrowRight size={16} /></a></div>
     </section>
 
+    <section className="v2-client-strip" aria-label="Proyectos en curso">
+      <div className="v2-shell v2-client-strip-inner">
+        <div><p>Proyectos en curso</p><span>Ya estamos trabajando junto a</span></div>
+        <div className="v2-client-logos">
+          <Image src="/images/clients/transportes-schiappacasse.png" alt="Transportes Schiappacasse" width={200} height={200} sizes="90px" className="v2-client-transport" />
+          <Image src="/images/clients/contempora.png" alt="Contempora Seguros Generales" width={541} height={200} sizes="230px" className="v2-client-contempora" />
+        </div>
+      </div>
+    </section>
+
     <section id="servicios" className="v2-services">
       <div className="v2-shell v2-services-layout">
         <div className="v2-services-intro"><p className="v2-kicker">Qué hacemos</p><h2>Todo conectado.<br />Un mismo<br /><span>partner.</span></h2><p>La estrategia orienta. La ingeniería hace posible. La inteligencia multiplica el alcance.</p><p>Integramos esas capacidades alrededor de lo que tu negocio necesita.</p><a href="#hablemos" className="v2-inline-link">Encontremos tu punto de partida <ArrowUpRight size={18} /></a></div>
